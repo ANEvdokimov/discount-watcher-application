@@ -7,28 +7,29 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
-import java.util.Optional;
 
 import an.evdokimov.discount.watcher.application.database.user.model.User;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Maybe;
 
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user WHERE user.id = :id")
-    Optional<User> getById(Long id);
+    Maybe<User> getById(Long id);
 
     @Query("SELECT * FROM user")
-    List<User> getAll();
+    Maybe<List<User>> getAll();
 
     @Query("SELECT * FROM user WHERE user.is_active = 1")
         // 0 (false) and 1 (true)
-    List<User> getActive();
+    Maybe<User> getActive();
 
     @Insert
-    void add(User... users);
+    Completable add(User... users);
 
     @Update
-    void update(User... users);
+    Completable update(User... users);
 
     @Delete
-    void delete(User... users);
+    Completable delete(User... users);
 }

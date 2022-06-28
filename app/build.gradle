@@ -53,4 +53,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testCompileOnly 'org.projectlombok:lombok:1.18.24'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    implementation 'androidx.room:room-rxjava3:2.4.2'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }

@@ -1,11 +1,10 @@
 package an.evdokimov.discount.watcher.application.service.user;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import an.evdokimov.discount.watcher.application.database.user.dao.UserDao;
 import an.evdokimov.discount.watcher.application.database.user.model.User;
+import io.reactivex.rxjava3.core.Maybe;
 
 public class UserService {
     private final UserDao userDao;
@@ -15,7 +14,7 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public List<User> getActiveUsers() {
+    public Maybe<User> getActiveUser() {
         return userDao.getActive();
     }
 }
