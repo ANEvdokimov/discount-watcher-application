@@ -1,10 +1,8 @@
-package an.evdokimov.discount.watcher.application.database.user.model;
+package an.evdokimov.discount.watcher.application.data.database.user.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +27,6 @@ public class User {
 
     @ColumnInfo(name = "token")
     public String token;
-
-    @ColumnInfo(name = "token_generation_time")
-    public LocalDateTime tokenGenerationTime;
 
     @ColumnInfo(name = "is_active", defaultValue = "true")
     public boolean isActive;

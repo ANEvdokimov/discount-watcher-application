@@ -1,4 +1,4 @@
-package an.evdokimov.discount.watcher.application.database.user.dao;
+package an.evdokimov.discount.watcher.application.data.database.user.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -8,7 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import an.evdokimov.discount.watcher.application.database.user.model.User;
+import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Maybe;
 
@@ -24,11 +24,23 @@ public interface UserDao {
         // 0 (false) and 1 (true)
     Maybe<User> getActive();
 
+    @Query("UPDATE user SET is_active = 0 WHERE is_active = 1")
+    void deactivateUsersSync();
+
+    @Query("SELECT * FROM user WHERE login = :login")
+    User getByLoginSync(String login);
+
     @Insert
     Completable add(User... users);
 
+    @Insert
+    void addSync(User... users);
+
     @Update
     Completable update(User... users);
+
+    @Update
+    void updateSync(User... users);
 
     @Delete
     Completable delete(User... users);

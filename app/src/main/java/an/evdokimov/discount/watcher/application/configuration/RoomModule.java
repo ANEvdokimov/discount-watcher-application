@@ -6,8 +6,8 @@ import androidx.room.Room;
 
 import javax.inject.Singleton;
 
-import an.evdokimov.discount.watcher.application.database.ApplicationDatabase;
-import an.evdokimov.discount.watcher.application.database.user.dao.UserDao;
+import an.evdokimov.discount.watcher.application.data.database.ApplicationDatabase;
+import an.evdokimov.discount.watcher.application.data.database.user.dao.UserDao;
 import dagger.Module;
 import dagger.Provides;
 
@@ -17,8 +17,9 @@ public class RoomModule {
 
     public RoomModule(Application application) {
         database = Room.databaseBuilder(
-                application, ApplicationDatabase.class, "discount_watcher_database"
-        ).build();
+                        application, ApplicationDatabase.class, "discount_watcher_database"
+                ).fallbackToDestructiveMigration()
+                .build();
     }
 
     @Provides

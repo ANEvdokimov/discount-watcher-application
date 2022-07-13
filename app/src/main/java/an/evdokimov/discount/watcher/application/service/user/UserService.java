@@ -1,20 +1,12 @@
 package an.evdokimov.discount.watcher.application.service.user;
 
-import javax.inject.Inject;
-
-import an.evdokimov.discount.watcher.application.database.user.dao.UserDao;
-import an.evdokimov.discount.watcher.application.database.user.model.User;
+import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import io.reactivex.rxjava3.core.Maybe;
 
-public class UserService {
-    private final UserDao userDao;
+public interface UserService {
+    Maybe<User> getActiveUserAsync();
 
-    @Inject
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    Maybe<User> loginAsync(String login, String password);
 
-    public Maybe<User> getActiveUser() {
-        return userDao.getActive();
-    }
+    Maybe<User> registerAsync(String login, String password);
 }

@@ -10,6 +10,8 @@ public class DiscountWatcherApplication extends Application {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .roomModule(new RoomModule(this))
+                .retrofitModule(new RetrofitModule())
+                .mapStructModule(new MapStructModule())
                 .build();
 
         super.onCreate();

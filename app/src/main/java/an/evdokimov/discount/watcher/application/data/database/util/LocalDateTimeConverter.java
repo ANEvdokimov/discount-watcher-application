@@ -1,4 +1,4 @@
-package an.evdokimov.discount.watcher.application.database.util;
+package an.evdokimov.discount.watcher.application.data.database.util;
 
 import androidx.room.TypeConverter;
 

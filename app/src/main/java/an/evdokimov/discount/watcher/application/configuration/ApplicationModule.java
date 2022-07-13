@@ -4,6 +4,8 @@ import android.app.Application;
 
 import javax.inject.Singleton;
 
+import an.evdokimov.discount.watcher.application.service.user.UserService;
+import an.evdokimov.discount.watcher.application.service.user.UserServiceImpl;
 import dagger.Module;
 import dagger.Provides;
 
@@ -19,5 +21,11 @@ public class ApplicationModule {
     @Singleton
     public Application application() {
         return application;
+    }
+
+    @Provides
+    @Singleton
+    public UserService userService(UserServiceImpl userServiceImpl) {
+        return userServiceImpl;
     }
 }
