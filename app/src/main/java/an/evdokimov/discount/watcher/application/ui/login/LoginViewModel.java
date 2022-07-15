@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import an.evdokimov.discount.watcher.application.R;
-import an.evdokimov.discount.watcher.application.configuration.ApplicationContext;
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -17,16 +16,14 @@ import lombok.Getter;
 
 public class LoginViewModel extends ViewModel {
     @Getter
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     @Getter
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private final UserService userService;
-    private final ApplicationContext context;
 
     @Inject
-    LoginViewModel(UserService userService, ApplicationContext context) {
+    LoginViewModel(UserService userService) {
         this.userService = userService;
-        this.context = context;
     }
 
     public void login(String username, String password) {
@@ -50,8 +47,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     private void successLogin(User user) {
-        context.setActiveUser(user);
-        loginResult.setValue(new LoginResult());
+        loginResult.setValue(new LoginResult(user));
     }
 
     private void error(Throwable throwable) {

@@ -16,15 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import an.evdokimov.discount.watcher.application.R;
-import an.evdokimov.discount.watcher.application.configuration.ApplicationContext;
 import an.evdokimov.discount.watcher.application.configuration.DiscountWatcherApplication;
 import an.evdokimov.discount.watcher.application.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
     @Inject
     public LoginViewModel loginViewModel;
-    @Inject
-    public ApplicationContext context;
     private ActivityLoginBinding binding;
 
     @Override
@@ -65,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             if (loginResult.getErrorMessage() != null) {
                 showLoginFailed(loginResult.getErrorMessage());
             } else {
-                showLoginSuccessMessage(context.getActiveUser().login);
+                showLoginSuccessMessage(loginResult.getActiveUser().login);
                 setResult(Activity.RESULT_OK);
                 //Complete and destroy login activity once successful
                 finish();

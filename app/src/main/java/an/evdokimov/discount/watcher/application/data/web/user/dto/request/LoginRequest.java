@@ -1,4 +1,4 @@
-package an.evdokimov.discount.watcher.application.data.remote.api.user.dto.request;
+package an.evdokimov.discount.watcher.application.data.web.user.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterRequest {
+public class LoginRequest {
     private String login;
-    private String name;
     private String password;
 }

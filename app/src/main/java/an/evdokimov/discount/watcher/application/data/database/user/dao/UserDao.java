@@ -10,6 +10,7 @@ import java.util.List;
 
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 
 @Dao
@@ -19,6 +20,11 @@ public interface UserDao {
 
     @Query("SELECT * FROM user")
     Maybe<List<User>> getAll();
+
+    @Query("SELECT * FROM user WHERE user.is_active = 1")
+        // 0 (false) and 1 (true)
+    Flowable<User> observeActive();
+
 
     @Query("SELECT * FROM user WHERE user.is_active = 1")
         // 0 (false) and 1 (true)

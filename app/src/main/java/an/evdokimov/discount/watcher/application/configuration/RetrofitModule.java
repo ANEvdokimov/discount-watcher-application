@@ -2,7 +2,7 @@ package an.evdokimov.discount.watcher.application.configuration;
 
 import javax.inject.Singleton;
 
-import an.evdokimov.discount.watcher.application.data.remote.api.user.repository.UserRepository;
+import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRequestSender;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
@@ -22,7 +22,7 @@ public class RetrofitModule {
 
     @Provides
     @Singleton
-    public UserRepository userRepository() {
-        return retrofit.create(UserRepository.class);
+    public UserRequestSender userRepository() {
+        return retrofit.create(UserRequestSender.class);
     }
 }

@@ -2,6 +2,7 @@ package an.evdokimov.discount.watcher.application.ui.login;
 
 import androidx.annotation.Nullable;
 
+import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import lombok.Getter;
 
 /**
@@ -12,7 +13,12 @@ class LoginResult {
     @Getter
     private String ErrorMessage;
 
-    public LoginResult() {
+    @Nullable
+    @Getter
+    private User activeUser;
+
+    public LoginResult(User user) {
+        activeUser = user;
     }
 
     public LoginResult(@Nullable String errorMessage) {

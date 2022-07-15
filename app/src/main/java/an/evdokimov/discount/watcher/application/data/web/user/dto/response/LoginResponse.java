@@ -1,4 +1,4 @@
-package an.evdokimov.discount.watcher.application.data.remote.api.user.dto.response;
+package an.evdokimov.discount.watcher.application.data.web.user.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

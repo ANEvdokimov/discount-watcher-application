@@ -6,11 +6,12 @@ import javax.inject.Inject;
 
 import an.evdokimov.discount.watcher.application.data.database.user.dao.UserDao;
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
-import an.evdokimov.discount.watcher.application.data.remote.api.ServerException;
-import an.evdokimov.discount.watcher.application.data.remote.api.user.dto.request.LoginRequest;
-import an.evdokimov.discount.watcher.application.data.remote.api.user.dto.request.RegisterRequest;
-import an.evdokimov.discount.watcher.application.data.remote.api.user.dto.response.LoginResponse;
-import an.evdokimov.discount.watcher.application.data.remote.api.user.repository.UserRepository;
+import an.evdokimov.discount.watcher.application.data.web.ServerException;
+import an.evdokimov.discount.watcher.application.data.web.user.dto.request.LoginRequest;
+import an.evdokimov.discount.watcher.application.data.web.user.dto.request.RegisterRequest;
+import an.evdokimov.discount.watcher.application.data.web.user.dto.response.LoginResponse;
+import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepository;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
 import retrofit2.Response;
 
@@ -24,7 +25,11 @@ public class UserServiceImpl implements UserService {
         this.repository = userRepository;
     }
 
-    public Maybe<User> getActiveUserAsync() {
+    public Flowable<User> observeActiveUser() {
+        return dao.observeActive();
+    }
+
+    public Maybe<User> getActiveAsync() {
         return dao.getActive();
     }
 

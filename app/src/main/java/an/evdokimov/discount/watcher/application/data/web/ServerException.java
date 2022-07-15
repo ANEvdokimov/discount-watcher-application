@@ -1,4 +1,4 @@
-package an.evdokimov.discount.watcher.application.data.remote.api;
+package an.evdokimov.discount.watcher.application.data.web;
 
 public class ServerException extends Exception {
     public ServerException() {
