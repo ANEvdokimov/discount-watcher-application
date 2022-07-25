@@ -1,23 +1,18 @@
 package an.evdokimov.discount.watcher.application.data.database.product.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductPrice {
-    private Long id;
-    private BigDecimal price;
-    private Double discount;
-    private BigDecimal priceWithDiscount;
-    private boolean isInStock;
-    private String availabilityInformation;
-    private LocalDateTime date;
+public class LentaProductPrice extends ProductPrice{
+    private BigDecimal priceWithCard;
 }

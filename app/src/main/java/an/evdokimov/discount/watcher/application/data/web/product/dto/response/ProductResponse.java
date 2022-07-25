@@ -2,7 +2,7 @@ package an.evdokimov.discount.watcher.application.data.web.product.dto.response;
 
 import java.util.List;
 
-import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
+import an.evdokimov.discount.watcher.application.data.web.shop.dto.response.ShopResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class ProductResponse {
     private Long id;
     private ProductInformationResponse productInformation;
-    private Shop shop;
+    private ShopResponse shop;
     private List<ProductPriceResponse> prices;
 }
