@@ -21,7 +21,7 @@ public class ProductListItemMapper {
         productListItem.setAvailabilityInformation(
                 lastProductPrice.getAvailabilityInformation());
         productListItem.setDate(lastProductPrice.getDate()
-                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy hh.mm")));
+                .format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")));
 
         if (lastProductPrice.getDiscount() != null && lastProductPrice.getDiscount() != 0) {
             productListItem.setPrice(lastProductPrice.getPrice().toString());
