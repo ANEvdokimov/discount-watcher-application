@@ -27,7 +27,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String username, String password) {
-        userService.loginAsync(username, password)
+        userService.login(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -37,7 +37,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void register(String username, String password) {
-        userService.registerAsync(username, password)
+        userService.register(username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

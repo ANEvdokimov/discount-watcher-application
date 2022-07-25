@@ -7,9 +7,11 @@ import io.reactivex.rxjava3.core.Maybe;
 public interface UserService {
     Flowable<User> observeActiveUser();
 
-    Maybe<User> getActiveAsync();
+    Maybe<User> getActive();
 
-    Maybe<User> loginAsync(String login, String password);
+    Maybe<User> login(String login, String password);
 
-    Maybe<User> registerAsync(String login, String password);
+    Maybe<User> relogin();
+
+    Maybe<User> register(String login, String password);
 }

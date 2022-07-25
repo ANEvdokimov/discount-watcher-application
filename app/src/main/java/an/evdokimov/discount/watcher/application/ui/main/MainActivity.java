@@ -1,9 +1,11 @@
-package an.evdokimov.discount.watcher.application;
+package an.evdokimov.discount.watcher.application.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import javax.inject.Inject;
 
@@ -20,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public UserService userService;
 
+    @Inject
+    public ProductListAdapter productListAdapter;
+
     private ActivityMainBinding binding;
 
     @Override
@@ -31,24 +36,38 @@ public class MainActivity extends AppCompatActivity {
         ((DiscountWatcherApplication) getApplicationContext())
                 .applicationComponent.inject(this);
 
-        userService.getActiveAsync()
+        RecyclerView productList = binding.productList;
+        productList.setLayoutManager(new LinearLayoutManager(this));
+        productList.setAdapter(productListAdapter);
+
+        userService.getActive()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::showContent,
+                        this::updateProductList,
                         ExceptionService::throwException,
-                        this::openLoginActivityBeforeShowingContent
+                        this::openLoginActivityAndShowContent
                 );
+
+        setContentView(binding.getRoot());
     }
 
-    protected void openLoginActivityBeforeShowingContent() {
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateProductList();
+    }
+
+    protected void openLoginActivityAndShowContent() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-
-        setContentView(binding.getRoot());
     }
 
-    protected void showContent(User activeUser) {
-        setContentView(binding.getRoot());
+    protected void updateProductList(User activeUser) {
+        updateProductList();
+    }
+
+    protected void updateProductList(){
+        productListAdapter.updateProducts();
     }
 }

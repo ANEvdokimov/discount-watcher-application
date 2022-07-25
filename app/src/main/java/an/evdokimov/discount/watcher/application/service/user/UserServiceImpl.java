@@ -29,55 +29,46 @@ public class UserServiceImpl implements UserService {
         return dao.observeActive();
     }
 
-    public Maybe<User> getActiveAsync() {
+    public Maybe<User> getActive() {
         return dao.getActive();
     }
 
-    public Maybe<User> loginAsync(String login, String password) {
-        return Maybe.defer(() -> loginSync(login, password));
+    public Maybe<User> login(String login, String password) {
+        return Maybe.defer(() -> Maybe.just(loginSync(login, password)));
     }
 
-    public Maybe<User> registerAsync(String login, String password) {
-        return Maybe.defer(() -> registerSync(login, password));
+    public Maybe<User> relogin() {
+        User activeUser = dao.getActive().blockingGet();
+        return login(activeUser.login, activeUser.password);
     }
 
-    private Maybe<User> loginSync(String login, String password) {
-        Response<LoginResponse> response;
-        try {
-            response = repository.login(new LoginRequest(login, password)).execute();
-        } catch (IOException e) {
-            return Maybe.error(e);
-        }
+    private User loginSync(String login, String password) throws IOException, ServerException {
+        Response<LoginResponse> response =
+                repository.login(new LoginRequest(login, password)).execute();
+
         if (response.isSuccessful()) {
             return saveNewActiveUser(login, password, response.body().getToken());
         } else {
-            try {
-                return Maybe.error(new ServerException(response.errorBody().string()));//todo parse error message
-            } catch (IOException e) {
-                return Maybe.error(e);
-            }
+            throw new ServerException(response.errorBody().string());
         }
     }
 
-    private Maybe<User> registerSync(String login, String password) {
-        Response<LoginResponse> response;
-        try {
-            response = repository.register(new RegisterRequest(login, login, password)).execute();
-        } catch (IOException e) {
-            return Maybe.error(e);
-        }
+    public Maybe<User> register(String login, String password) {
+        return Maybe.defer(() -> Maybe.just(registerSync(login, password)));
+    }
+
+    private User registerSync(String login, String password) throws IOException, ServerException {
+        Response<LoginResponse> response =
+                repository.register(new RegisterRequest(login, login, password)).execute();
+
         if (response.isSuccessful()) {
             return saveNewActiveUser(login, password, response.body().getToken());
         } else {
-            try {
-                return Maybe.error(new ServerException(response.errorBody().string()));//todo parse error message
-            } catch (IOException e) {
-                return Maybe.error(e);
-            }
+            throw new ServerException(response.errorBody().string());
         }
     }
 
-    private Maybe<User> saveNewActiveUser(String login, String password, String token) {
+    private User saveNewActiveUser(String login, String password, String token) {
         dao.deactivateUsersSync();
         User user = dao.getByLoginSync(login);
         if (user == null) {
@@ -94,6 +85,6 @@ public class UserServiceImpl implements UserService {
             user.password = password;
             dao.updateSync(user);
         }
-        return Maybe.just(user);
+        return user;
     }
 }

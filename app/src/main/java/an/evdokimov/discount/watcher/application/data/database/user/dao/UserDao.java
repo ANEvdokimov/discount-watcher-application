@@ -25,10 +25,13 @@ public interface UserDao {
         // 0 (false) and 1 (true)
     Flowable<User> observeActive();
 
-
     @Query("SELECT * FROM user WHERE user.is_active = 1")
         // 0 (false) and 1 (true)
     Maybe<User> getActive();
+
+    @Query("SELECT * FROM user WHERE user.is_active = 1")
+        // 0 (false) and 1 (true)
+    User getActiveSync();
 
     @Query("UPDATE user SET is_active = 0 WHERE is_active = 1")
     void deactivateUsersSync();

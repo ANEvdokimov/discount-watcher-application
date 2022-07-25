@@ -4,6 +4,7 @@ import org.mapstruct.factory.Mappers;
 
 import javax.inject.Singleton;
 
+import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.user.UserMapper;
 import dagger.Module;
 import dagger.Provides;
@@ -14,5 +15,11 @@ public class MapStructModule {
     @Singleton
     public UserMapper userMapper() {
         return Mappers.getMapper(UserMapper.class);
+    }
+
+    @Provides
+    @Singleton
+    public ProductMapper productMapper() {
+        return Mappers.getMapper(ProductMapper.class);
     }
 }

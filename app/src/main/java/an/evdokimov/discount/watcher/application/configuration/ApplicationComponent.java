@@ -4,7 +4,7 @@ import android.app.Application;
 
 import javax.inject.Singleton;
 
-import an.evdokimov.discount.watcher.application.MainActivity;
+import an.evdokimov.discount.watcher.application.ui.main.MainActivity;
 import an.evdokimov.discount.watcher.application.ui.login.LoginActivity;
 import dagger.Component;
 
