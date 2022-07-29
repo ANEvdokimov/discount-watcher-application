@@ -1,4 +1,4 @@
-package an.evdokimov.discount.watcher.application.data.web.product.dto.repository;
+package an.evdokimov.discount.watcher.application.data.web.product.repository;
 
 import java.util.List;
 

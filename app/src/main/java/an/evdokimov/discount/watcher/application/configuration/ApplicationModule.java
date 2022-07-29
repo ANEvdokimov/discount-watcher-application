@@ -4,8 +4,8 @@ import android.app.Application;
 
 import javax.inject.Singleton;
 
-import an.evdokimov.discount.watcher.application.data.web.product.dto.repository.ProductRepository;
-import an.evdokimov.discount.watcher.application.data.web.product.dto.repository.ProductRepositoryImpl;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepository;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepositoryImpl;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepository;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepositoryImpl;
 import an.evdokimov.discount.watcher.application.service.product.ProductService;

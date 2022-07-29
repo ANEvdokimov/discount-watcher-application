@@ -10,8 +10,8 @@ import an.evdokimov.discount.watcher.application.data.database.product.model.Pro
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
-import an.evdokimov.discount.watcher.application.data.web.product.dto.repository.ProductRepository;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductResponse;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepository;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Response;

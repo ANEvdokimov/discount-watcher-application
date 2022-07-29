@@ -2,7 +2,8 @@ package an.evdokimov.discount.watcher.application.configuration;
 
 import javax.inject.Singleton;
 
-import an.evdokimov.discount.watcher.application.data.web.product.dto.repository.ProductRequestSender;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRequestSender;
+import an.evdokimov.discount.watcher.application.data.web.shop.repository.ShopRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRequestSender;
 import dagger.Module;
 import dagger.Provides;
