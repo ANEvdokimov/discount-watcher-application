@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         modeList.add(getResources().getString(R.string.main_mode_spinner_all));
         modeList.add(getResources().getString(R.string.main_mode_spinner_discount));
         modeList.add(getResources().getString(R.string.main_mode_spinner_available));
-        modeList.add(getResources().getString(R.string.main_mode_spinner_price_changed));
+        //modeList.add(getResources().getString(R.string.main_mode_spinner_price_changed));
         modeSpinner.setAdapter(
                 new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modeList)
         );
