@@ -11,4 +11,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="button_register">Register</string>
     <string name="main_shops_spinner_all_shops">All shops</string>
+    <string name="main_mode_spinner_all">All products</string>
+    <string name="main_mode_spinner_discount">Discount</string>
+    <string name="main_mode_spinner_available">Available</string>
+    <string name="main_mode_spinner_price_changed">Price changed</string>
 </resources>
