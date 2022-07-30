@@ -15,4 +15,5 @@
     <string name="main_mode_spinner_discount">Discount</string>
     <string name="main_mode_spinner_available">Available</string>
     <string name="main_mode_spinner_price_changed">Price changed</string>
+    <string name="main_only_active">Only active</string>
 </resources>
