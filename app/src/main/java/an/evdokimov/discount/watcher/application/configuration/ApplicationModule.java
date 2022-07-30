@@ -6,10 +6,14 @@ import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepository;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepositoryImpl;
+import an.evdokimov.discount.watcher.application.data.web.shop.repository.ShopRepository;
+import an.evdokimov.discount.watcher.application.data.web.shop.repository.ShopRepositoryImpl;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepository;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepositoryImpl;
 import an.evdokimov.discount.watcher.application.service.product.ProductService;
 import an.evdokimov.discount.watcher.application.service.product.ProductServiceImpl;
+import an.evdokimov.discount.watcher.application.service.shop.ShopService;
+import an.evdokimov.discount.watcher.application.service.shop.ShopServiceImpl;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
 import an.evdokimov.discount.watcher.application.service.user.UserServiceImpl;
 import dagger.Module;
@@ -51,5 +55,17 @@ public class ApplicationModule {
     @Singleton
     public ProductService productService(ProductServiceImpl productServiceImpl) {
         return productServiceImpl;
+    }
+
+    @Provides
+    @Singleton
+    public ShopRepository shopRepository(ShopRepositoryImpl shopRepositoryImpl) {
+        return shopRepositoryImpl;
+    }
+
+    @Provides
+    @Singleton
+    public ShopService shopService(ShopServiceImpl shopServiceImpl) {
+        return shopServiceImpl;
     }
 }

@@ -1,13 +1,10 @@
 package an.evdokimov.discount.watcher.application.ui.main;
 
-import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,23 +20,25 @@ import an.evdokimov.discount.watcher.application.data.database.product.model.Pro
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductListItemMapper;
 import an.evdokimov.discount.watcher.application.databinding.LayoutProductListItemBinding;
 import an.evdokimov.discount.watcher.application.service.product.ProductService;
+import an.evdokimov.discount.watcher.application.ui.ErrorMessageService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
     private final ProductService productService;
-    private final Application application;
     private final ProductListItemMapper productListItemMapper;
-    private Context context;
+    private final ErrorMessageService errorMessageService;
     private List<Product> products;
 
     @Inject
-    public ProductListAdapter(ProductService productService, Application application,
-                              ProductListItemMapper productListItemMapper) {
+    public ProductListAdapter(ProductService productService,
+                              ProductListItemMapper productListItemMapper,
+                              ErrorMessageService errorMessageService) {
         this.productService = productService;
-        this.application = application;
+
         this.productListItemMapper = productListItemMapper;
+        this.errorMessageService = errorMessageService;
         products = new ArrayList<>();
     }
 
@@ -54,11 +53,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                         },
                         throwable -> {
                             Log.e(getClass().getName(), throwable.getMessage(), throwable);
-                            Toast.makeText(
-                                    application,
-                                    throwable.getMessage(),
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            errorMessageService.showErrorMessage(throwable.getMessage());
                         }
                 );
     }
@@ -66,10 +61,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-
         return new ProductViewHolder(
-                LayoutInflater.from(context)
+                LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.layout_product_list_item, parent, false)
         );
     }

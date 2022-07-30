@@ -33,4 +33,10 @@ public class RetrofitModule {
     public ProductRequestSender productRequestSender() {
         return retrofit.create(ProductRequestSender.class);
     }
+
+    @Provides
+    @Singleton
+    public ShopRequestSender shopRequestSender() {
+        return retrofit.create(ShopRequestSender.class);
+    }
 }
