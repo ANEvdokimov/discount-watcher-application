@@ -2,7 +2,6 @@ package an.evdokimov.discount.watcher.application.service.shop;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -18,7 +17,6 @@ import retrofit2.Response;
 
 public class ShopServiceImpl extends BaseService<ShopResponse> implements ShopService {
     private final ShopRepository repository;
-    private final UserService userService;
     private final ShopMapper mapper;
 
     @Inject
@@ -27,7 +25,6 @@ public class ShopServiceImpl extends BaseService<ShopResponse> implements ShopSe
                            ShopMapper mapper) {
         super(userService);
         this.repository = repository;
-        this.userService = userService;
         this.mapper = mapper;
     }
 
@@ -41,9 +38,7 @@ public class ShopServiceImpl extends BaseService<ShopResponse> implements ShopSe
                 executeForMultiply(token -> repository.getByUser(token, true));
 
         if (response.isSuccessful()) {
-            return response.body().stream()
-                    .map(mapper::mapFromResponse)
-                    .collect(Collectors.toList());
+            return mapper.mapFromResponse(response.body());
         } else {
             throw new ServerException(response.errorBody().string());//TODO parse error message
         }
