@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
+import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductListItemMapper;
 import an.evdokimov.discount.watcher.application.databinding.LayoutProductListItemBinding;
 import an.evdokimov.discount.watcher.application.service.product.ProductService;
@@ -42,9 +44,19 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         products = new ArrayList<>();
     }
 
-    public void updateProducts() {
-        productService.getAll()
-                .subscribeOn(Schedulers.io())
+    public void updateProducts(@NonNull Boolean onlyActive,
+                               @Nullable Shop shop,
+                               @Nullable Boolean monitorAvailability,
+                               @Nullable Boolean monitorDiscount,
+                               @Nullable Boolean monitorPriceChanges) {
+        productService.getAll(
+                        false,
+                        onlyActive,
+                        shop,
+                        monitorAvailability,
+                        monitorDiscount,
+                        monitorPriceChanges
+                ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         products -> {

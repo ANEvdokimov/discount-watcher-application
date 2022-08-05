@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.configuration.DiscountWatcherApplication;
 import an.evdokimov.discount.watcher.application.configuration.ExceptionService;
+import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.databinding.ActivityMainBinding;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private Spinner shopSpinner;
     private Spinner modeSpinner;
+    private CheckBox isActiveCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ((DiscountWatcherApplication) getApplicationContext())
                 .applicationComponent.inject(this);
 
+        configureOnlyActiveCheckbox();
         configureModeSpinner();
         configureShopSpinner();
         configureProductList();
@@ -84,13 +88,32 @@ public class MainActivity extends AppCompatActivity {
         shopSpinnerAdapter.updateShopSpinner();
     }
 
+    protected void updateProductList() {
+        Boolean monitorAvailability = modeSpinner.getSelectedItemPosition() == 2 ? true : null;
+        Boolean monitorDiscount = modeSpinner.getSelectedItemPosition() == 1 ? true : null;
+        Boolean monitorPriceChanges = modeSpinner.getSelectedItemPosition() == 3 ? true : null;
+
+        productListAdapter.updateProducts(
+                isActiveCheckbox.isChecked(),
+                (Shop) shopSpinner.getSelectedItem(),
+                monitorAvailability,
+                monitorDiscount,
+                monitorPriceChanges
+        );
+    }
+
+    private void configureOnlyActiveCheckbox() {
+        isActiveCheckbox = binding.onlyActive;
+        isActiveCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> updateProductList());
+    }
+
     private void configureShopSpinner() {
         shopSpinner = binding.shopSpinner;
         shopSpinner.setAdapter(shopSpinnerAdapter);
         shopSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                productListAdapter.updateProducts();
+                updateProductList();
             }
 
             @Override
@@ -113,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                productListAdapter.updateProducts();
+                updateProductList();
             }
 
             @Override
