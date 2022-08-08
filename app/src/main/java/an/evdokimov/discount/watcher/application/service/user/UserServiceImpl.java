@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
         } else {
             user.token = token;
             user.password = password;
+            user.isActive = true;
             dao.updateSync(user);
         }
         return user;
