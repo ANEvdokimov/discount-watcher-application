@@ -16,4 +16,12 @@
     <string name="main_mode_spinner_available">Available</string>
     <string name="main_mode_spinner_price_changed">Price changed</string>
     <string name="main_only_active">Only active</string>
+    <string name="new_product_discount_checkbox">Monitor discount</string>
+    <string name="new_product_availability_checkbox">Monitor availability</string>
+    <string name="new_product_price_changes_checkbox">Monitor price changes</string>
+    <string name="new_product_add_button">Add product</string>
+    <string name="new_product_url">URL to product in a shop site</string>
+    <string name="new_product_saved">Product saved</string>
+    <string name="new_product_saving_failure">Error during saving product</string>
+    <string name="it_is_not_product_page">It is not product</string>
 </resources>

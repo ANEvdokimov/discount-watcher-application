@@ -48,4 +48,20 @@ public abstract class BaseService<T> {
             throw new ServerException(response.errorBody().string());//TODO parse error message
         }
     }
+
+    protected Response<Void> executeForVoid(Function<String, Call<Void>> request)
+            throws IOException, ServerException {
+        Response<Void> response = request.apply(userService.getActive().blockingGet().token).execute();
+
+        if (response.isSuccessful()) {
+            return response;
+        }
+
+        if (response.code() == 401) {
+            String newToken = userService.relogin().blockingGet().token;
+            return request.apply(newToken).execute();
+        } else {
+            throw new ServerException(response.errorBody().string());//TODO parse error message
+        }
+    }
 }

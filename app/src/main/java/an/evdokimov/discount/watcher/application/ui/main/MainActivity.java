@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -25,6 +27,7 @@ import an.evdokimov.discount.watcher.application.databinding.ActivityMainBinding
 import an.evdokimov.discount.watcher.application.service.user.UserService;
 import an.evdokimov.discount.watcher.application.ui.ErrorMessageService;
 import an.evdokimov.discount.watcher.application.ui.login.LoginActivity;
+import an.evdokimov.discount.watcher.application.ui.product.add.NewProductsActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         ((DiscountWatcherApplication) getApplicationContext())
                 .applicationComponent.inject(this);
 
+        configureAddProductButton();
         configureOnlyActiveCheckbox();
         configureModeSpinner();
         configureShopSpinner();
@@ -150,5 +154,13 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView productList = binding.productList;
         productList.setLayoutManager(new LinearLayoutManager(this));
         productList.setAdapter(productListAdapter);
+    }
+
+    public void configureAddProductButton() {
+        FloatingActionButton newProduct = binding.addNewProduct;
+        newProduct.setOnClickListener(view -> {
+            Intent intent = new Intent(this, NewProductsActivity.class);
+            startActivity(intent);
+        });
     }
 }

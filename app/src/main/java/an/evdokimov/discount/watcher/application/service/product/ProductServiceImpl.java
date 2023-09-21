@@ -13,10 +13,12 @@ import an.evdokimov.discount.watcher.application.data.database.product.model.Pro
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
+import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductResponse;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepository;
 import an.evdokimov.discount.watcher.application.service.BaseService;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Response;
 
@@ -50,6 +52,11 @@ public class ProductServiceImpl extends BaseService<ProductResponse> implements 
         )));
     }
 
+    @Override
+    public Completable addProduct(@NonNull NewProduct product) {
+        return Completable.fromAction(() -> addProductSync(product));
+    }
+
     private List<Product> getAllSync(@NonNull Boolean withPriceHistory,
                                      @NonNull Boolean onlyActive,
                                      @Nullable Shop shop,
@@ -70,6 +77,14 @@ public class ProductServiceImpl extends BaseService<ProductResponse> implements 
         if (response.isSuccessful()) {
             return mapper.mapFromResponse(response.body());
         } else {
+            throw new ServerException(response.errorBody().string());//TODO parse error message
+        }
+    }
+
+    private void addProductSync(@NonNull NewProduct product) throws ServerException, IOException {
+        Response<Void> response = executeForVoid(token -> repository.addProduct(token, product));
+
+        if (!response.isSuccessful()) {
             throw new ServerException(response.errorBody().string());//TODO parse error message
         }
     }

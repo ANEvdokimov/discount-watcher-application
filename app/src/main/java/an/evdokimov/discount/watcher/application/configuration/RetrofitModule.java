@@ -2,6 +2,7 @@ package an.evdokimov.discount.watcher.application.configuration;
 
 import javax.inject.Singleton;
 
+import an.evdokimov.discount.watcher.application.data.web.city.repository.CityRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.shop.repository.ShopRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRequestSender;
@@ -16,7 +17,7 @@ public class RetrofitModule {
 
     public RetrofitModule() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://192.168.55.14:8080/")
+                .baseUrl("https://192.168.1.2:8080/")
                 .client(SelfSignedHttpClient.getUnsafeOkHttpClient())
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
@@ -38,5 +39,11 @@ public class RetrofitModule {
     @Singleton
     public ShopRequestSender shopRequestSender() {
         return retrofit.create(ShopRequestSender.class);
+    }
+
+    @Provides
+    @Singleton
+    public CityRequestSender cityRequestSender() {
+        return retrofit.create(CityRequestSender.class);
     }
 }

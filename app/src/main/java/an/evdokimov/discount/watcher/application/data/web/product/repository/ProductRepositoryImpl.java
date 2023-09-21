@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
+import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductResponse;
 import retrofit2.Call;
 
@@ -35,5 +36,10 @@ public class ProductRepositoryImpl implements ProductRepository {
                 monitorDiscount,
                 monitorPriceChanges
         );
+    }
+
+    @Override
+    public Call<Void> addProduct(@NonNull String token, @NonNull NewProduct product) {
+        return requestSender.addProduct("Bearer " + token, product);
     }
 }
