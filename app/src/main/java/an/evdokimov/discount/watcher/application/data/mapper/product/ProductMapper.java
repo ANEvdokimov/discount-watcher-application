@@ -1,5 +1,7 @@
 package an.evdokimov.discount.watcher.application.data.mapper.product;
 
+import androidx.annotation.Nullable;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -22,7 +24,11 @@ public abstract class ProductMapper {
         this.shopMapper = Mappers.getMapper(ShopMapper.class);
     }
 
-    public Product mapFromResponse(ProductResponse response) {
+    public Product mapFromResponse(@Nullable ProductResponse response) {
+        if (response == null) {
+            return null;
+        }
+
         Product product = new Product();
 
         product.setId(response.getId());

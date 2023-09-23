@@ -20,6 +20,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         this.requestSender = requestSender;
     }
 
+    @Override
+    public Call<ProductResponse> getById(@NonNull String token, @NonNull Long id) {
+        return requestSender.getById("Bearer " + token, id, true);
+    }
+
     public Call<List<ProductResponse>> getAll(@Nullable String token,
                                               @NonNull Boolean withPriceHistory,
                                               @NonNull Boolean onlyActive,

@@ -11,6 +11,9 @@ import an.evdokimov.discount.watcher.application.data.web.product.dto.response.P
 import retrofit2.Call;
 
 public interface ProductRepository {
+
+    Call<ProductResponse> getById(@NonNull String token, @NonNull Long id);
+
     Call<List<ProductResponse>> getAll(@NonNull String token,
                                        @NonNull Boolean withPriceHistory,
                                        @NonNull Boolean onlyActive,

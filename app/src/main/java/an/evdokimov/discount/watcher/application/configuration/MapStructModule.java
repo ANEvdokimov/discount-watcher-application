@@ -5,7 +5,6 @@ import org.mapstruct.factory.Mappers;
 import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.mapper.city.CityMapper;
-import an.evdokimov.discount.watcher.application.data.mapper.product.ProductListItemMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.shop.ShopMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.user.UserMapper;
@@ -24,12 +23,6 @@ public class MapStructModule {
     @Singleton
     public ProductMapper productMapper() {
         return Mappers.getMapper(ProductMapper.class);
-    }
-
-    @Provides
-    @Singleton
-    public ProductListItemMapper productListItemMapper() {
-        return new ProductListItemMapper();
     }
 
     @Provides

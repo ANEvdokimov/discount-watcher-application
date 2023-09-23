@@ -1,5 +1,6 @@
 package an.evdokimov.discount.watcher.application.data.database.product.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Product implements Serializable {
     private Long id;
     private ProductInformation productInformation;
     private Shop shop;

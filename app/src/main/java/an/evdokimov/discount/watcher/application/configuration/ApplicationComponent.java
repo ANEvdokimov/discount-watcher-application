@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import an.evdokimov.discount.watcher.application.ui.login.LoginActivity;
 import an.evdokimov.discount.watcher.application.ui.main.MainActivity;
 import an.evdokimov.discount.watcher.application.ui.product.add.NewProductsActivity;
+import an.evdokimov.discount.watcher.application.ui.product.details.ProductDetailsActivity;
 import dagger.Component;
 
 @Singleton
@@ -22,6 +23,8 @@ public interface ApplicationComponent {
     void inject(LoginActivity loginActivity);
 
     void inject(NewProductsActivity newProductsActivity);
+
+    void inject(ProductDetailsActivity productDetailsActivity);
 
     Application application();
 }

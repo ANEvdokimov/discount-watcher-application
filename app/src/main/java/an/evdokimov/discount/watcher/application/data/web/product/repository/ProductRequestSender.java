@@ -1,6 +1,7 @@
 package an.evdokimov.discount.watcher.application.data.web.product.repository;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
@@ -12,8 +13,14 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ProductRequestSender {
+    @GET("api/product/{id}")
+    Call<ProductResponse> getById(@Header("Authorization") @NonNull String token,
+                                  @Path("id") @NonNull Long id,
+                                  @Header("with-price-history") boolean withPriceHistory);
+
     @GET("api/products")
     Call<List<ProductResponse>> get(@Header("Authorization") String token,
                                     @Header("with-price-history") Boolean withPriceHistory,

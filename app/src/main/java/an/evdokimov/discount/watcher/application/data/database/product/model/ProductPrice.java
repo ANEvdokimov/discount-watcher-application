@@ -1,5 +1,6 @@
 package an.evdokimov.discount.watcher.application.data.database.product.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductPrice {
+public class ProductPrice implements Serializable {
     private Long id;
     private BigDecimal price;
     private Double discount;

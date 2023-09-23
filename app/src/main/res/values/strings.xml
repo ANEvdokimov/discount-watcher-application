@@ -24,4 +24,6 @@
     <string name="new_product_saved">Product saved</string>
     <string name="new_product_saving_failure">Error during saving product</string>
     <string name="it_is_not_product_page">It is not product</string>
+    <string name="in_stock">In stock</string>
+    <string name="not_in_stock">Not available</string>
 </resources>
