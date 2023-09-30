@@ -56,7 +56,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             binding.twDate.setText("N/A");
         } else {
             binding.twAvailability.setText(price.getAvailabilityInformation());
-            binding.twDate.setText(price.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")));
+            binding.twDate.setText(price.getDate() != null
+                    ? price.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm"))
+                    : "date n/a");
 
             if (price.getDiscount() != null || price.getPriceWithDiscount() != null) {
                 binding.twDiscount.setText(price.getDiscount() + "%");

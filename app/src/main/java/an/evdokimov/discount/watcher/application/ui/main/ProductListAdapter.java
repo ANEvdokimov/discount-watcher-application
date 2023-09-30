@@ -131,7 +131,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 actualPrice.setText("N/A");
             } else {
                 availability.setText(productPrice.getAvailabilityInformation());
-                date.setText(productPrice.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")));
+                date.setText(productPrice.getDate() != null
+                        ? productPrice.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm"))
+                        : "date n/a");
 
                 if (productPrice.getDiscount() != null && productPrice.getPriceWithDiscount() != null) {
                     actualPrice.setText(productPrice.getPriceWithDiscount().toString());

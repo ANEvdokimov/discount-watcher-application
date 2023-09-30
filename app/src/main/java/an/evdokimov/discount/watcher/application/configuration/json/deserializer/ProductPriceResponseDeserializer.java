@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import an.evdokimov.discount.watcher.application.data.database.product.model.PriceChange;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.LentaProductPriceResponse;
@@ -40,7 +41,12 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
                     .priceWithCard(jsonNode.get("priceWithCard").decimalValue())
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
-                    .date(LocalDateTime.parse(jsonNode.get("date").textValue()))
+                    .date(jsonNode.get("date").isNull()
+                            ? null
+                            : LocalDateTime.parse(jsonNode.get("date").textValue())
+                            .atZone(ZoneId.of("UTC"))
+                            .withZoneSameInstant(ZoneId.systemDefault())
+                            .toLocalDateTime())
                     .priceChange(jsonNode.get("priceChange").isNull()
                             ? null
                             : PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
@@ -57,7 +63,12 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
                             : jsonNode.get("priceWithDiscount").decimalValue())
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
-                    .date(LocalDateTime.parse(jsonNode.get("date").textValue()))
+                    .date(jsonNode.get("date").isNull()
+                            ? null
+                            : LocalDateTime.parse(jsonNode.get("date").textValue())
+                            .atZone(ZoneId.of("UTC"))
+                            .withZoneSameInstant(ZoneId.systemDefault())
+                            .toLocalDateTime())
                     .priceChange(jsonNode.get("priceChange").isNull()
                             ? null
                             : PriceChange.valueOf(jsonNode.get("priceChange").textValue()))

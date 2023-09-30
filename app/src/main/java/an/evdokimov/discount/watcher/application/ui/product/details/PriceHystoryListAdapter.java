@@ -128,7 +128,9 @@ public class PriceHystoryListAdapter extends RecyclerView.Adapter<PriceHystoryLi
             availability.setText(price.isInStock() ?
                     itemView.getResources().getString(R.string.in_stock)
                     : itemView.getResources().getString(R.string.not_in_stock));
-            date.setText(price.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")));
+            date.setText(price.getDate() != null
+                    ? price.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm"))
+                    : "date n/a");
 
             if (price.getDiscount() != null || price.getPriceWithDiscount() != null) {
                 oldPrice.setText(price.getPrice().toString());
