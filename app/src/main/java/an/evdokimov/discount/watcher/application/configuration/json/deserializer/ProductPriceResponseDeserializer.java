@@ -41,7 +41,9 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
                     .date(LocalDateTime.parse(jsonNode.get("date").textValue()))
-                    .priceChange(PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
+                    .priceChange(jsonNode.get("priceChange").isNull()
+                            ? null
+                            : PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
                     .build();
         } else {
             return ProductPriceResponse.builder()
@@ -56,7 +58,9 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
                     .date(LocalDateTime.parse(jsonNode.get("date").textValue()))
-                    .priceChange(PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
+                    .priceChange(jsonNode.get("priceChange").isNull()
+                            ? null
+                            : PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
                     .build();
         }
     }
