@@ -31,8 +31,12 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
             return LentaProductPriceResponse.builder()
                     .id(jsonNode.get("id").longValue())
                     .price(jsonNode.get("price").decimalValue())
-                    .discount(jsonNode.get("discount").asDouble())
-                    .priceWithDiscount(jsonNode.get("priceWithDiscount").decimalValue())
+                    .discount(jsonNode.get("discount").isNull()
+                            ? null
+                            : jsonNode.get("discount").asDouble())
+                    .priceWithDiscount(jsonNode.get("priceWithDiscount").isNull()
+                            ? null
+                            : jsonNode.get("priceWithDiscount").decimalValue())
                     .priceWithCard(jsonNode.get("priceWithCard").decimalValue())
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
@@ -43,8 +47,12 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
             return ProductPriceResponse.builder()
                     .id(jsonNode.get("id").asLong())
                     .price(jsonNode.get("price").decimalValue())
-                    .discount(jsonNode.get("discount").asDouble())
-                    .priceWithDiscount(jsonNode.get("priceWithDiscount").decimalValue())
+                    .discount(jsonNode.get("discount").isNull()
+                            ? null
+                            : jsonNode.get("discount").asDouble())
+                    .priceWithDiscount(jsonNode.get("priceWithDiscount").isNull()
+                            ? null
+                            : jsonNode.get("priceWithDiscount").decimalValue())
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
                     .date(LocalDateTime.parse(jsonNode.get("date").textValue()))

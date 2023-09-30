@@ -58,13 +58,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
             binding.twAvailability.setText(price.getAvailabilityInformation());
             binding.twDate.setText(price.getDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm")));
 
-            if (price.getDiscount() != null && price.getPriceWithDiscount() != null) {
+            if (price.getDiscount() != null || price.getPriceWithDiscount() != null) {
                 binding.twDiscount.setText(price.getDiscount() + "%");
                 binding.twActualPrice.setText(price.getPriceWithDiscount().toString());
                 binding.twOldPrice.setText(price.getPrice().toString());
             } else {
                 binding.twDiscount.setText("");
-                binding.twActualPrice.setText("");
+                binding.twActualPrice.setText(price.getPrice().toString());
                 binding.twOldPrice.setText("");
             }
         }
