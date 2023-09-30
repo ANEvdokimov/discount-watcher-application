@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import an.evdokimov.discount.watcher.application.configuration.json.deserializer.ProductPriceResponseDeserializer;
+import an.evdokimov.discount.watcher.application.data.database.product.model.PriceChange;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +27,5 @@ public class ProductPriceResponse {
     private String availabilityInformation;
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime date;
+    private PriceChange priceChange;
 }

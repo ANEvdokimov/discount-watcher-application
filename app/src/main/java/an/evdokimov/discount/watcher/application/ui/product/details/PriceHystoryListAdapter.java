@@ -1,12 +1,15 @@
 package an.evdokimov.discount.watcher.application.ui.product.details;
 
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.format.DateTimeFormatter;
@@ -75,11 +78,18 @@ public class PriceHystoryListAdapter extends RecyclerView.Adapter<PriceHystoryLi
     }
 
     static class PriceHistoryViewHolder extends RecyclerView.ViewHolder {
+        private final Drawable iconEqual;
+        private final Drawable iconUp;
+        private final Drawable iconDown;
+        private final Drawable iconDots;
+        private final Drawable iconCross;
+
         private final TextView availability;
         private final TextView date;
         private final TextView oldPrice;
         private final TextView discount;
         private final TextView actualPrice;
+        private final ImageView iwPriceChange;
 
         public PriceHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,6 +100,28 @@ public class PriceHystoryListAdapter extends RecyclerView.Adapter<PriceHystoryLi
             oldPrice = binding.oldPrice;
             discount = binding.discount;
             actualPrice = binding.actualPrice;
+            iwPriceChange = binding.iwPriceChange;
+
+            iconEqual = AppCompatResources.getDrawable(
+                    itemView.getContext(),
+                    R.drawable.equal_sign_svgrepo_com
+            );
+            iconUp = AppCompatResources.getDrawable(
+                    itemView.getContext(),
+                    R.drawable.arrow_up_svgrepo_com
+            );
+            iconDown = AppCompatResources.getDrawable(
+                    itemView.getContext(),
+                    R.drawable.arrow_down_svgrepo_com
+            );
+            iconDots = AppCompatResources.getDrawable(
+                    itemView.getContext(),
+                    R.drawable.dots_horizontal_svgrepo_com
+            );
+            iconCross = AppCompatResources.getDrawable(
+                    itemView.getContext(),
+                    R.drawable.close_svgrepo_com
+            );
         }
 
         public void bind(ProductPrice price) {
@@ -108,7 +140,25 @@ public class PriceHystoryListAdapter extends RecyclerView.Adapter<PriceHystoryLi
                 actualPrice.setText(price.getPrice().toString());
             }
 
-
+            if (price.getPriceChange() != null) {
+                switch (price.getPriceChange()) {
+                    case UP:
+                        iwPriceChange.setImageDrawable(iconUp);
+                        break;
+                    case DOWN:
+                        iwPriceChange.setImageDrawable(iconDown);
+                        break;
+                    case EQUAL:
+                        iwPriceChange.setImageDrawable(iconEqual);
+                        break;
+                    case UNDEFINED:
+                        iwPriceChange.setImageDrawable(iconCross);
+                        break;
+                    case FIRST_PRICE:
+                    default:
+                        iwPriceChange.setImageDrawable(iconDots);
+                }
+            }
         }
     }
 }

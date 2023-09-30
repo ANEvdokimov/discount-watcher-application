@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import an.evdokimov.discount.watcher.application.data.database.product.model.PriceChange;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.LentaProductPriceResponse;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductPriceResponse;
 
@@ -36,6 +37,7 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
                     .date(LocalDateTime.parse(jsonNode.get("date").textValue()))
+                    .priceChange(PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
                     .build();
         } else {
             return ProductPriceResponse.builder()
@@ -46,6 +48,7 @@ public class ProductPriceResponseDeserializer extends StdDeserializer<ProductPri
                     .isInStock(jsonNode.get("isInStock").booleanValue())
                     .availabilityInformation(jsonNode.get("availabilityInformation").textValue())
                     .date(LocalDateTime.parse(jsonNode.get("date").textValue()))
+                    .priceChange(PriceChange.valueOf(jsonNode.get("priceChange").textValue()))
                     .build();
         }
     }

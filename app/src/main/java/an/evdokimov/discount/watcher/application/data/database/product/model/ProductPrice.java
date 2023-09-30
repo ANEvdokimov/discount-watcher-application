@@ -21,4 +21,5 @@ public class ProductPrice implements Serializable {
     private boolean isInStock;
     private String availabilityInformation;
     private LocalDateTime date;
+    private PriceChange priceChange;
 }
