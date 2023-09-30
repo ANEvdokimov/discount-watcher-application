@@ -37,7 +37,6 @@ public class NewProductsActivity extends AppCompatActivity {
     private WebView webPage;
     private FloatingActionButton saveProductButton;
     private final List<Pattern> productPageUrlPatterns = new ArrayList<>() {{
-        add(Pattern.compile("https://magnit.ru/promo/\\d+/?"));
         add(Pattern.compile("https://magnit.ru/catalog/\\d+/?"));
     }};
 
