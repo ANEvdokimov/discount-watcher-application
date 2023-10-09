@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,28 +23,28 @@ import javax.inject.Singleton;
 import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.data.database.product.model.ProductPrice;
 import an.evdokimov.discount.watcher.application.databinding.LayoutPriceHistoryListItemBinding;
-import an.evdokimov.discount.watcher.application.service.product.ProductService;
+import an.evdokimov.discount.watcher.application.service.product.ProductPriceService;
 import an.evdokimov.discount.watcher.application.ui.ErrorMessageService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
 public class PriceHystoryListAdapter extends RecyclerView.Adapter<PriceHystoryListAdapter.PriceHistoryViewHolder> {
-    private final ProductService productService;
+    private final ProductPriceService priceService;
     private final ErrorMessageService errorMessageService;
     private List<ProductPrice> prices;
 
     @Inject
-    public PriceHystoryListAdapter(ProductService productService,
+    public PriceHystoryListAdapter(ProductPriceService priceService,
                                    ErrorMessageService errorMessageService) {
-        this.productService = productService;
+        this.priceService = priceService;
 
         this.errorMessageService = errorMessageService;
         prices = new ArrayList<>();
     }
 
     public void loadPrices(@NonNull Long productId) {
-        productService.getAllPrices(productId)
+        priceService.getByProductId(productId, true, LocalDate.now().minusMonths(3))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

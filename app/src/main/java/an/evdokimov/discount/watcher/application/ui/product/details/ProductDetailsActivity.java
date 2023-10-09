@@ -47,7 +47,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 product.getShop().getCity().getCyrillicName())
         );
 
-        ProductPrice price = product.getPrices().get(0);
+        ProductPrice price = product.getLastPrice();
         if (price == null) {
             binding.twActualPrice.setText("N/A");
             binding.twOldPrice.setText("N/A");

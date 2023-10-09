@@ -3,6 +3,7 @@ package an.evdokimov.discount.watcher.application.configuration;
 import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.web.city.repository.CityRequestSender;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductPriceRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.shop.repository.ShopRequestSender;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRequestSender;
@@ -33,6 +34,12 @@ public class RetrofitModule {
     @Singleton
     public ProductRequestSender productRequestSender() {
         return retrofit.create(ProductRequestSender.class);
+    }
+
+    @Provides
+    @Singleton
+    public ProductPriceRequestSender productPriceRequestSender() {
+        return retrofit.create(ProductPriceRequestSender.class);
     }
 
     @Provides

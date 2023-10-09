@@ -1,7 +1,5 @@
 package an.evdokimov.discount.watcher.application.data.web.product.dto.response;
 
-import java.util.List;
-
 import an.evdokimov.discount.watcher.application.data.web.shop.dto.response.ShopResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +14,5 @@ public class ProductResponse {
     private Long id;
     private ProductInformationResponse productInformation;
     private ShopResponse shop;
-    private List<ProductPriceResponse> prices;
+    private ProductPriceResponse lastPrice;
 }

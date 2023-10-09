@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
-import an.evdokimov.discount.watcher.application.data.database.product.model.ProductPrice;
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
@@ -37,19 +36,12 @@ public class ProductServiceImpl extends BaseService<ProductResponse> implements 
     }
 
     @Override
-    public Single<List<ProductPrice>> getAllPrices(@NonNull Long productId) {
-        return Single.defer(() -> Single.just(getAllPricesSync(productId)));
-    }
-
-    @Override
-    public Single<List<Product>> getAll(@NonNull Boolean withPriceHistory,
-                                        @NonNull Boolean onlyActive,
+    public Single<List<Product>> getAll(@NonNull Boolean onlyActive,
                                         @Nullable Shop shop,
                                         @Nullable Boolean monitorAvailability,
                                         @Nullable Boolean monitorDiscount,
                                         @Nullable Boolean monitorPriceChanges) {
         return Single.defer(() -> Single.just(getAllSync(
-                withPriceHistory,
                 onlyActive,
                 shop,
                 monitorAvailability,
@@ -63,18 +55,7 @@ public class ProductServiceImpl extends BaseService<ProductResponse> implements 
         return Completable.fromAction(() -> addProductSync(product));
     }
 
-    private List<ProductPrice> getAllPricesSync(@NonNull Long productId) throws ServerException, IOException {
-        Response<ProductResponse> response = execute(token -> repository.getById(token, productId));
-
-        if (response.isSuccessful()) {
-            return mapper.mapFromResponse(response.body()).getPrices();
-        } else {
-            throw new ServerException(response.errorBody().string());//TODO parse error message
-        }
-    }
-
-    private List<Product> getAllSync(@NonNull Boolean withPriceHistory,
-                                     @NonNull Boolean onlyActive,
+    private List<Product> getAllSync(@NonNull Boolean onlyActive,
                                      @Nullable Shop shop,
                                      @Nullable Boolean monitorAvailability,
                                      @Nullable Boolean monitorDiscount,
@@ -82,7 +63,6 @@ public class ProductServiceImpl extends BaseService<ProductResponse> implements 
             throws IOException, ServerException {
         Response<List<ProductResponse>> response = executeForMultiply(token -> repository.getAll(
                 token,
-                withPriceHistory,
                 onlyActive,
                 shop,
                 monitorAvailability,

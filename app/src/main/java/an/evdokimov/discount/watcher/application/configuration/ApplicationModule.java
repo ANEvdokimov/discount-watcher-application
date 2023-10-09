@@ -6,6 +6,8 @@ import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.web.city.repository.CityRepository;
 import an.evdokimov.discount.watcher.application.data.web.city.repository.CityRepositoryImpl;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductPriceRepository;
+import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductPriceRepositoryImpl;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepository;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepositoryImpl;
 import an.evdokimov.discount.watcher.application.data.web.shop.repository.ShopRepository;
@@ -14,6 +16,8 @@ import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRe
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepositoryImpl;
 import an.evdokimov.discount.watcher.application.service.city.CityService;
 import an.evdokimov.discount.watcher.application.service.city.CityServiceImpl;
+import an.evdokimov.discount.watcher.application.service.product.ProductPriceService;
+import an.evdokimov.discount.watcher.application.service.product.ProductPriceServiceImpl;
 import an.evdokimov.discount.watcher.application.service.product.ProductService;
 import an.evdokimov.discount.watcher.application.service.product.ProductServiceImpl;
 import an.evdokimov.discount.watcher.application.service.shop.ShopService;
@@ -57,8 +61,20 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
+    public ProductPriceRepository productPriceRepository(ProductPriceRepositoryImpl priceRepoImpl) {
+        return priceRepoImpl;
+    }
+
+    @Provides
+    @Singleton
     public ProductService productService(ProductServiceImpl productServiceImpl) {
         return productServiceImpl;
+    }
+
+    @Provides
+    @Singleton
+    public ProductPriceService productPriceService(ProductPriceServiceImpl priceServiceImpl) {
+        return priceServiceImpl;
     }
 
     @Provides

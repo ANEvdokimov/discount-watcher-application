@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.mapper.city.CityMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
+import an.evdokimov.discount.watcher.application.data.mapper.product.ProductPriceMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.shop.ShopMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.user.UserMapper;
 import dagger.Module;
@@ -23,6 +24,12 @@ public class MapStructModule {
     @Singleton
     public ProductMapper productMapper() {
         return Mappers.getMapper(ProductMapper.class);
+    }
+
+    @Provides
+    @Singleton
+    public ProductPriceMapper productPriceMapper() {
+        return Mappers.getMapper(ProductPriceMapper.class);
     }
 
     @Provides

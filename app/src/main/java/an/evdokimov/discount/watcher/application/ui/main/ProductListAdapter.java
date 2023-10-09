@@ -50,7 +50,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                                @Nullable Boolean monitorDiscount,
                                @Nullable Boolean monitorPriceChanges) {
         productService.getAll(
-                        false,
                         onlyActive,
                         shop,
                         monitorAvailability,
@@ -118,7 +117,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         public void bind(Product product) {
             currentProduct = product;
 
-            ProductPrice productPrice = product.getPrices().get(0);
+            ProductPrice productPrice = product.getLastPrice();
 
             name.setText(product.getProductInformation().getName());
             shopName.setText(product.getShop().getName());

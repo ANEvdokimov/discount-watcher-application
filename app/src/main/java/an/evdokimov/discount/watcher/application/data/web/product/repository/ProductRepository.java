@@ -15,7 +15,6 @@ public interface ProductRepository {
     Call<ProductResponse> getById(@NonNull String token, @NonNull Long id);
 
     Call<List<ProductResponse>> getAll(@NonNull String token,
-                                       @NonNull Boolean withPriceHistory,
                                        @NonNull Boolean onlyActive,
                                        @Nullable Shop shop,
                                        @Nullable Boolean monitorAvailability,

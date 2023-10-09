@@ -25,8 +25,8 @@ public class ProductRepositoryImpl implements ProductRepository {
         return requestSender.getById("Bearer " + token, id, true);
     }
 
+    @Override
     public Call<List<ProductResponse>> getAll(@Nullable String token,
-                                              @NonNull Boolean withPriceHistory,
                                               @NonNull Boolean onlyActive,
                                               @Nullable Shop shop,
                                               @Nullable Boolean monitorAvailability,
@@ -34,7 +34,6 @@ public class ProductRepositoryImpl implements ProductRepository {
                                               @Nullable Boolean monitorPriceChanges) {
         return requestSender.get(
                 "Bearer " + token,
-                withPriceHistory,
                 onlyActive,
                 shop != null ? shop.getId() : null,
                 monitorAvailability,

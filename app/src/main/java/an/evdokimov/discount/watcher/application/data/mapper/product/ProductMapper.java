@@ -6,7 +6,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
 import an.evdokimov.discount.watcher.application.data.mapper.shop.ShopMapper;
@@ -35,9 +34,7 @@ public abstract class ProductMapper {
         product.setShop(shopMapper.mapFromResponse(response.getShop()));
         product.setProductInformation(
                 productInformationMapper.mapFromResponse(response.getProductInformation()));
-        product.setPrices(response.getPrices().stream()
-                .map(productPriceMapper::mapFromResponse)
-                .collect(Collectors.toList()));
+        product.setLastPrice(productPriceMapper.mapFromResponse(response.getLastPrice()));
 
         return product;
     }

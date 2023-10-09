@@ -23,7 +23,6 @@ public interface ProductRequestSender {
 
     @GET("api/products")
     Call<List<ProductResponse>> get(@Header("Authorization") String token,
-                                    @Header("with-price-history") Boolean withPriceHistory,
                                     @Header("only-active") Boolean onlyActive,
                                     @Header("shop-id") @Nullable Long shop,
                                     @Header("monitor-availability") @Nullable Boolean monitorAvailability,
