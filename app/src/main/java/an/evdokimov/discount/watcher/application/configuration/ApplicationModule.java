@@ -18,8 +18,8 @@ import an.evdokimov.discount.watcher.application.service.city.CityService;
 import an.evdokimov.discount.watcher.application.service.city.CityServiceImpl;
 import an.evdokimov.discount.watcher.application.service.product.ProductPriceService;
 import an.evdokimov.discount.watcher.application.service.product.ProductPriceServiceImpl;
-import an.evdokimov.discount.watcher.application.service.product.ProductService;
-import an.evdokimov.discount.watcher.application.service.product.ProductServiceImpl;
+import an.evdokimov.discount.watcher.application.service.product.UserProductService;
+import an.evdokimov.discount.watcher.application.service.product.UserProductServiceImpl;
 import an.evdokimov.discount.watcher.application.service.shop.ShopService;
 import an.evdokimov.discount.watcher.application.service.shop.ShopServiceImpl;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
@@ -67,7 +67,7 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public ProductService productService(ProductServiceImpl productServiceImpl) {
+    public UserProductService productService(UserProductServiceImpl productServiceImpl) {
         return productServiceImpl;
     }
 

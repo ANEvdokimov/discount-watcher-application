@@ -12,13 +12,14 @@ import javax.inject.Inject;
 import an.evdokimov.discount.watcher.application.configuration.DiscountWatcherApplication;
 import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
 import an.evdokimov.discount.watcher.application.data.database.product.model.ProductPrice;
+import an.evdokimov.discount.watcher.application.data.database.product.model.UserProduct;
 import an.evdokimov.discount.watcher.application.databinding.ActivityProductDetailsBinding;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     private ActivityProductDetailsBinding binding;
     @Inject
     public PriceHystoryListAdapter listAdapter;
-    private Product product;
+    private UserProduct userProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .applicationComponent.inject(this);
 
         binding = ActivityProductDetailsBinding.inflate(getLayoutInflater());
-        product = (Product) getIntent().getExtras().get("product");
+        userProduct = (UserProduct) getIntent().getExtras().get("product");
 
         binding.rwPriceHistory.setLayoutManager(new LinearLayoutManager(this));
         binding.rwPriceHistory.setAdapter(listAdapter);
@@ -40,6 +41,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void fillProductInfo() {
+        Product product = userProduct.getProduct();
+
         binding.productName.setText(product.getProductInformation().getName());
         binding.twShop.setText(product.getShop().getName());
         binding.twChainAndCity.setText(String.format("%s - %s",
@@ -73,6 +76,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void loadPriceHistory() {
-        listAdapter.loadPrices(product.getId());
+        listAdapter.loadPrices(userProduct.getProduct().getId());
     }
 }

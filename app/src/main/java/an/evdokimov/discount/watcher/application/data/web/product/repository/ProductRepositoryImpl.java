@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductResponse;
+import an.evdokimov.discount.watcher.application.data.web.product.dto.response.UserProductResponse;
 import retrofit2.Call;
 
 public class ProductRepositoryImpl implements ProductRepository {
@@ -26,12 +27,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Call<List<ProductResponse>> getAll(@Nullable String token,
-                                              @NonNull Boolean onlyActive,
-                                              @Nullable Shop shop,
-                                              @Nullable Boolean monitorAvailability,
-                                              @Nullable Boolean monitorDiscount,
-                                              @Nullable Boolean monitorPriceChanges) {
+    public Call<List<UserProductResponse>> getAll(@Nullable String token,
+                                                  @NonNull Boolean onlyActive,
+                                                  @Nullable Shop shop,
+                                                  @Nullable Boolean monitorAvailability,
+                                                  @Nullable Boolean monitorDiscount,
+                                                  @Nullable Boolean monitorPriceChanges) {
         return requestSender.get(
                 "Bearer " + token,
                 onlyActive,

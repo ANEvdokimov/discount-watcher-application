@@ -26,13 +26,13 @@ import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.configuration.DiscountWatcherApplication;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
 import an.evdokimov.discount.watcher.application.databinding.ActivityNewProductsBinding;
-import an.evdokimov.discount.watcher.application.service.product.ProductService;
+import an.evdokimov.discount.watcher.application.service.product.UserProductService;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class NewProductsActivity extends AppCompatActivity {
     @Inject
-    public ProductService productService;
+    public UserProductService userProductService;
 
     private WebView webPage;
     private FloatingActionButton saveProductButton;
@@ -129,7 +129,7 @@ public class NewProductsActivity extends AppCompatActivity {
                 .monitorAvailability(true)
                 .build();
 
-        productService.addProduct(newProduct)
+        userProductService.addProduct(newProduct)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

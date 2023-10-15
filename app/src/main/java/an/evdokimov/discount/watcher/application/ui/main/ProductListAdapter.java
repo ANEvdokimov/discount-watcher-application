@@ -19,11 +19,11 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.R;
-import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
 import an.evdokimov.discount.watcher.application.data.database.product.model.ProductPrice;
+import an.evdokimov.discount.watcher.application.data.database.product.model.UserProduct;
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.databinding.LayoutProductListItemBinding;
-import an.evdokimov.discount.watcher.application.service.product.ProductService;
+import an.evdokimov.discount.watcher.application.service.product.UserProductService;
 import an.evdokimov.discount.watcher.application.ui.ErrorMessageService;
 import an.evdokimov.discount.watcher.application.ui.product.details.ProductDetailsActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -31,14 +31,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Singleton
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
-    private final ProductService productService;
+    private final UserProductService userProductService;
     private final ErrorMessageService errorMessageService;
-    private List<Product> products;
+    private List<UserProduct> products;
 
     @Inject
-    public ProductListAdapter(ProductService productService,
+    public ProductListAdapter(UserProductService userProductService,
                               ErrorMessageService errorMessageService) {
-        this.productService = productService;
+        this.userProductService = userProductService;
 
         this.errorMessageService = errorMessageService;
         products = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                                @Nullable Boolean monitorAvailability,
                                @Nullable Boolean monitorDiscount,
                                @Nullable Boolean monitorPriceChanges) {
-        productService.getAll(
+        userProductService.getAll(
                         onlyActive,
                         shop,
                         monitorAvailability,
@@ -97,7 +97,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         private final TextView discount;
         private final TextView actualPrice;
 
-        private Product currentProduct;
+        private UserProduct currentProduct;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,13 +114,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Product product) {
+        public void bind(UserProduct product) {
             currentProduct = product;
 
-            ProductPrice productPrice = product.getLastPrice();
+            ProductPrice productPrice = product.getProduct().getLastPrice();
 
-            name.setText(product.getProductInformation().getName());
-            shopName.setText(product.getShop().getName());
+            name.setText(product.getProduct().getProductInformation().getName());
+            shopName.setText(product.getProduct().getShop().getName());
 
             if (productPrice == null) {
                 availability.setText("N/A");

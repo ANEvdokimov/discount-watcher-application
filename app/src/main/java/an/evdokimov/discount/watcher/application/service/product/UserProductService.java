@@ -5,18 +5,18 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
+import an.evdokimov.discount.watcher.application.data.database.product.model.UserProduct;
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
-public interface ProductService {
-    Single<List<Product>> getAll(@NonNull Boolean onlyActive,
-                                 @Nullable Shop shop,
-                                 @Nullable Boolean monitorAvailability,
-                                 @Nullable Boolean monitorDiscount,
-                                 @Nullable Boolean monitorPriceChanges);
+public interface UserProductService {
+    Single<List<UserProduct>> getAll(@NonNull Boolean onlyActive,
+                                     @Nullable Shop shop,
+                                     @Nullable Boolean monitorAvailability,
+                                     @Nullable Boolean monitorDiscount,
+                                     @Nullable Boolean monitorPriceChanges);
 
     Completable addProduct(@NonNull NewProduct product);
 }

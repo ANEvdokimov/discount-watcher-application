@@ -8,6 +8,7 @@ import java.util.List;
 
 import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductResponse;
+import an.evdokimov.discount.watcher.application.data.web.product.dto.response.UserProductResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,13 +22,13 @@ public interface ProductRequestSender {
                                   @Path("id") @NonNull Long id,
                                   @Header("with-price-history") boolean withPriceHistory);
 
-    @GET("api/products")
-    Call<List<ProductResponse>> get(@Header("Authorization") String token,
-                                    @Header("only-active") Boolean onlyActive,
-                                    @Header("shop-id") @Nullable Long shop,
-                                    @Header("monitor-availability") @Nullable Boolean monitorAvailability,
-                                    @Header("monitor-discount") @Nullable Boolean monitorDiscount,
-                                    @Header("monitor-price-changes") @Nullable Boolean monitorPriceChanges);
+    @GET("api/products/by_user")
+    Call<List<UserProductResponse>> get(@Header("Authorization") String token,
+                                        @Header("only-active") Boolean onlyActive,
+                                        @Header("shop-id") @Nullable Long shop,
+                                        @Header("monitor-availability") @Nullable Boolean monitorAvailability,
+                                        @Header("monitor-discount") @Nullable Boolean monitorDiscount,
+                                        @Header("monitor-price-changes") @Nullable Boolean monitorPriceChanges);
 
     @PUT("api/products/add_by_cookies")
     Call<Void> addProduct(@Header("Authorization") String token,
