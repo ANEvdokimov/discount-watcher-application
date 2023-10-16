@@ -69,6 +69,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 );
     }
 
+    public void updateProduct(int position, UserProduct userProduct) {
+        products.set(position, userProduct);
+        notifyItemChanged(position);
+    }
+
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -149,8 +154,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(itemView.getContext(), ProductDetailsActivity.class);
+            intent.putExtra("position", getLayoutPosition());
             intent.putExtra("product", currentProduct);
-            itemView.getContext().startActivity(intent);
+
+            ((MainActivity) itemView.getContext()).getProductDetailsActivityLauncher().launch(intent);
         }
     }
 }

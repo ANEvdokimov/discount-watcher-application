@@ -1,5 +1,6 @@
 package an.evdokimov.discount.watcher.application.ui.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +24,7 @@ import javax.inject.Inject;
 import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.configuration.DiscountWatcherApplication;
 import an.evdokimov.discount.watcher.application.configuration.ExceptionService;
+import an.evdokimov.discount.watcher.application.data.database.product.model.UserProduct;
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.databinding.ActivityMainBinding;
@@ -30,6 +34,7 @@ import an.evdokimov.discount.watcher.application.ui.login.LoginActivity;
 import an.evdokimov.discount.watcher.application.ui.product.add.NewProductsActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import lombok.Getter;
 
 public class MainActivity extends AppCompatActivity {
     @Inject
@@ -41,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public ShopSpinnerAdapter shopSpinnerAdapter;
 
+    @Getter
+    private ActivityResultLauncher<Intent> productDetailsActivityLauncher;
     private ActivityMainBinding binding;
     private Spinner shopSpinner;
     private Spinner modeSpinner;
@@ -69,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                         ExceptionService::throwException,
                         this::openLoginActivityAndShowContent
                 );
+
+        initProductDetailActivityLauncher();
 
         setContentView(binding.getRoot());
     }
@@ -162,5 +171,18 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NewProductsActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void initProductDetailActivityLauncher() {
+        productDetailsActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        int position = result.getData().getIntExtra("position", -1);
+                        UserProduct userProduct = (UserProduct) result.getData()
+                                .getSerializableExtra("userProduct");
+                        productListAdapter.updateProduct(position, userProduct);
+                    }
+                });
     }
 }

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
+import an.evdokimov.discount.watcher.application.data.web.product.dto.request.UserProductRequest;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.ProductResponse;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.UserProductResponse;
 import retrofit2.Call;
@@ -23,7 +24,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Call<ProductResponse> getById(@NonNull String token, @NonNull Long id) {
-        return requestSender.getById("Bearer " + token, id, true);
+        return requestSender.getById("Bearer " + token, id);
+    }
+
+    @Override
+    public Call<UserProductResponse> getUserProductById(@NonNull String token, @NonNull Long id) {
+        return requestSender.getUserProductById("Bearer " + token, id);
     }
 
     @Override
@@ -46,5 +52,10 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Call<Void> addProduct(@NonNull String token, @NonNull NewProduct product) {
         return requestSender.addProduct("Bearer " + token, product);
+    }
+
+    @Override
+    public Call<Void> update(@NonNull String token, @NonNull UserProductRequest userProduct) {
+        return requestSender.updateUserProduct("Bearer " + token, userProduct);
     }
 }

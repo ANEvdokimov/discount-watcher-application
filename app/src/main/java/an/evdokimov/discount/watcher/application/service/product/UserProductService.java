@@ -12,6 +12,8 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface UserProductService {
+    Single<UserProduct> getUserProductById(@NonNull Long id);
+
     Single<List<UserProduct>> getAll(@NonNull Boolean onlyActive,
                                      @Nullable Shop shop,
                                      @Nullable Boolean monitorAvailability,
@@ -19,4 +21,6 @@ public interface UserProductService {
                                      @Nullable Boolean monitorPriceChanges);
 
     Completable addProduct(@NonNull NewProduct product);
+
+    Completable update(@NonNull UserProduct userProduct);
 }

@@ -12,10 +12,10 @@ import javax.inject.Singleton;
 
 import an.evdokimov.discount.watcher.application.data.database.product.model.UserProduct;
 import an.evdokimov.discount.watcher.application.data.database.shop.model.Shop;
-import an.evdokimov.discount.watcher.application.data.mapper.product.ProductMapper;
 import an.evdokimov.discount.watcher.application.data.mapper.product.UserProductMapper;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.request.NewProduct;
+import an.evdokimov.discount.watcher.application.data.web.product.dto.request.UserProductRequest;
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.UserProductResponse;
 import an.evdokimov.discount.watcher.application.data.web.product.repository.ProductRepository;
 import an.evdokimov.discount.watcher.application.service.BaseService;
@@ -28,16 +28,19 @@ import retrofit2.Response;
 public class UserProductServiceImpl extends BaseService<UserProductResponse>
         implements UserProductService {
     private final ProductRepository repository;
-    private final ProductMapper productMapper;
     private final UserProductMapper userProductMapper;
 
     @Inject
-    public UserProductServiceImpl(ProductRepository repository, ProductMapper productMapper,
-                                  UserService userService, UserProductMapper userProductMapper) {
+    public UserProductServiceImpl(ProductRepository repository, UserService userService,
+                                  UserProductMapper userProductMapper) {
         super(userService);
         this.repository = repository;
-        this.productMapper = productMapper;
         this.userProductMapper = userProductMapper;
+    }
+
+    @Override
+    public Single<UserProduct> getUserProductById(@NonNull Long id) {
+        return Single.defer(() -> Single.just(getUserProductByIdSync(id)));
     }
 
     @Override
@@ -58,6 +61,23 @@ public class UserProductServiceImpl extends BaseService<UserProductResponse>
     @Override
     public Completable addProduct(@NonNull NewProduct product) {
         return Completable.fromAction(() -> addProductSync(product));
+    }
+
+    @Override
+    public Completable update(@NonNull UserProduct userProduct) {
+        return Completable.fromAction(() -> updateSync(userProduct));
+    }
+
+    public UserProduct getUserProductByIdSync(@NonNull Long id)
+            throws ServerException, IOException {
+        Response<UserProductResponse> response = execute(token ->
+                repository.getUserProductById(token, id));
+
+        if (response.isSuccessful()) {
+            return userProductMapper.mapFromResponse(response.body());
+        } else {
+            throw new ServerException(response.errorBody().string());//TODO parse error message
+        }
     }
 
     private List<UserProduct> getAllSync(@NonNull Boolean onlyActive,
@@ -86,6 +106,16 @@ public class UserProductServiceImpl extends BaseService<UserProductResponse>
 
     private void addProductSync(@NonNull NewProduct product) throws ServerException, IOException {
         Response<Void> response = executeForVoid(token -> repository.addProduct(token, product));
+
+        if (!response.isSuccessful()) {
+            throw new ServerException(response.errorBody().string());//TODO parse error message
+        }
+    }
+
+    private void updateSync(@NonNull UserProduct userProduct) throws ServerException, IOException {
+        UserProductRequest request = userProductMapper.mapToRequest(userProduct);
+
+        Response<Void> response = executeForVoid(token -> repository.update(token, request));
 
         if (!response.isSuccessful()) {
             throw new ServerException(response.errorBody().string());//TODO parse error message
