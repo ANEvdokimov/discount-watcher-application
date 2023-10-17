@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
 
+import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.configuration.DiscountWatcherApplication;
 import an.evdokimov.discount.watcher.application.data.database.product.model.Product;
 import an.evdokimov.discount.watcher.application.data.database.product.model.ProductPrice;
@@ -115,7 +116,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             .subscribe(
                                     () -> Toast.makeText(
                                             getApplicationContext(),
-                                            "Product was deleted",//todo translate
+                                            getResources().getString(R.string.toast_deleted_product),
                                             Toast.LENGTH_SHORT
                                     ).show(),
                                     throwable -> {
@@ -136,9 +137,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ImageButton btnDelete = binding.btnDelete;
         btnDelete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Remove the product?")//todo translate
-                    .setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", null)
+            builder.setMessage(getResources().getString(R.string.alert_delete_product))
+                    .setPositiveButton(getResources().getString(R.string.alert_yes), dialogClickListener)
+                    .setNegativeButton(getResources().getString(R.string.alert_no), null)
                     .show();
         });
     }
@@ -162,9 +163,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     .subscribe(
                             () -> Toast.makeText(
                                     this,
-                                    "Изменения сохранены",
+                                    getResources().getString(R.string.toast_product_updated),
                                     Toast.LENGTH_SHORT
-                            ).show(), //todo translate
+                            ).show(),
                             throwable -> {
                                 Log.e(getClass().getName(), throwable.getMessage(), throwable);
                                 errorMessageService.showErrorMessage(throwable.getMessage());

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_register">Регистрация</string>
+    <string name="title_activity_login">Вход</string>
+    <string name="welcome">Добро пожаловать, %s!</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войти</string>
+    <string name="action_sign_in_short">Войти</string>
+    <string name="invalid_username">Некорректное имя пользователя</string>
+    <string name="invalid_password">Пароль должен быть длиннее 5 символов</string>
+    <string name="main_shops_spinner_all_shops">Все магазины</string>
+    <string name="main_mode_spinner_all">Все продукты</string>
+    <string name="main_mode_spinner_discount">Скидки</string>
+    <string name="main_mode_spinner_available">В наличии</string>
+    <string name="main_mode_spinner_price_changed">Снизилась цена</string>
+    <string name="main_only_active">Актуальное</string>
+    <string name="new_product_saved">Продукт сохранен</string>
+    <string name="new_product_saving_failure">Ошибка при сохранении</string>
+    <string name="it_is_not_product_page">Это не продукт</string>
+    <string name="toast_deleted_product">Продукт удален</string>
+    <string name="alert_delete_product">Удалить продукт?</string>
+    <string name="alert_yes">Да</string>
+    <string name="alert_no">Нет</string>
+    <string name="toast_product_updated">Продукт обновлен</string>
+    <string name="tw_wm_title">Режим отслеживания:</string>
+    <string name="tw_wm_discount">скидки</string>
+    <string name="tw_wm_availability">наличие</string>
+    <string name="tw_wm_price">снижение цены</string>
+    <string name="tw_price_history">История цен за 3 месяца:</string>
+    <string name="in_stock">В наличии</string>
+    <string name="not_in_stock">Отсутствует</string>
+</resources>

@@ -147,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="watching mode:"
+            android:text="@string/tw_wm_title"
             app:layout_constraintTop_toBottomOf="@+id/tw_chainAndCity" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -160,7 +160,7 @@
                 android:id="@+id/cb_discount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="discount"
+                android:text="@string/tw_wm_discount"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -169,7 +169,7 @@
                 android:id="@+id/cb_availability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="availability"
+                android:text="@string/tw_wm_availability"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cb_discount"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -178,7 +178,7 @@
                 android:id="@+id/cb_priceDecrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="price decrease"
+                android:text="@string/tw_wm_price"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/cb_availability"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -190,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
-            android:text="История цен за 3 месяца"
+            android:text="@string/tw_price_history"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_modes" />
