@@ -1,6 +1,5 @@
 package an.evdokimov.discount.watcher.application.ui.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +31,7 @@ import an.evdokimov.discount.watcher.application.service.user.UserService;
 import an.evdokimov.discount.watcher.application.ui.ErrorMessageService;
 import an.evdokimov.discount.watcher.application.ui.login.LoginActivity;
 import an.evdokimov.discount.watcher.application.ui.product.add.NewProductsActivity;
+import an.evdokimov.discount.watcher.application.ui.product.details.ProductDetailsActivity;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.Getter;
@@ -177,11 +177,14 @@ public class MainActivity extends AppCompatActivity {
         productDetailsActivityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getResultCode() == ProductDetailsActivity.RESULT_PRODUCT_UPDATED) {
                         int position = result.getData().getIntExtra("position", -1);
                         UserProduct userProduct = (UserProduct) result.getData()
                                 .getSerializableExtra("userProduct");
                         productListAdapter.updateProduct(position, userProduct);
+                    } else if (result.getResultCode() == ProductDetailsActivity.RESULT_PRODUCT_DELETED) {
+                        int position = result.getData().getIntExtra("position", -1);
+                        productListAdapter.deleteProduct(position);
                     }
                 });
     }

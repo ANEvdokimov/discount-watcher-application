@@ -12,6 +12,7 @@ import an.evdokimov.discount.watcher.application.data.web.product.dto.response.P
 import an.evdokimov.discount.watcher.application.data.web.product.dto.response.UserProductResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -42,4 +43,8 @@ public interface ProductRequestSender {
     @POST("api/products/by_user")
     Call<Void> updateUserProduct(@Header("Authorization") @NonNull String token,
                                  @Body @NonNull UserProductRequest userProduct);
+
+    @DELETE("api/products/by_user/{id}")
+    Call<Void> deleteUserProduct(@Header("Authorization") @NonNull String token,
+                                 @Path("id") @NonNull Long id);
 }

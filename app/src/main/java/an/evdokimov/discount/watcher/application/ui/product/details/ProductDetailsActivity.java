@@ -1,9 +1,11 @@
 package an.evdokimov.discount.watcher.application.ui.product.details;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,11 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ProductDetailsActivity extends AppCompatActivity {
+    public static final int RESULT_PRODUCT_UPDATED = 1;
+    public static final int RESULT_PRODUCT_DELETED = 2;
+    public static final int RESULT_NO_UPDATES = 3;
+
+
     private ActivityProductDetailsBinding binding;
     @Inject
     public PriceHystoryListAdapter listAdapter;
@@ -50,6 +57,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         fillProductInfo();
         initCheckboxes();
+        initDeleteButton();
         loadPriceHistory();
 
         setContentView(binding.getRoot());
@@ -96,6 +104,45 @@ public class ProductDetailsActivity extends AppCompatActivity {
         binding.cbPriceDecrease.setChecked(userProduct.isMonitorPriceChanges());
     }
 
+    private void initDeleteButton() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    userProductService.delete(userProduct.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    () -> Toast.makeText(
+                                            getApplicationContext(),
+                                            "Product was deleted",//todo translate
+                                            Toast.LENGTH_SHORT
+                                    ).show(),
+                                    throwable -> {
+                                        Log.e(getClass().getName(), throwable.getMessage(), throwable);
+                                        errorMessageService.showErrorMessage(throwable.getMessage());
+                                    });
+
+                    Intent data = new Intent();
+                    data.putExtra("position", userProductPosition);
+                    data.putExtra("userProduct", userProduct);
+                    setResult(RESULT_PRODUCT_DELETED, data);
+                    finish();
+                }
+            }
+        };
+
+
+        ImageButton btnDelete = binding.btnDelete;
+        btnDelete.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Remove the product?")//todo translate
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", null)
+                    .show();
+        });
+    }
+
     @Override
     public void onBackPressed() {
         boolean discountChecked = binding.cbDiscount.isChecked();
@@ -126,9 +173,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             Intent data = new Intent();
             data.putExtra("position", userProductPosition);
             data.putExtra("userProduct", userProduct);
-            setResult(Activity.RESULT_OK, data);
+            setResult(RESULT_PRODUCT_UPDATED, data);
         } else {
-            setResult(Activity.RESULT_CANCELED, null);
+            setResult(RESULT_NO_UPDATES, null);
         }
 
         super.onBackPressed();

@@ -58,4 +58,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     public Call<Void> update(@NonNull String token, @NonNull UserProductRequest userProduct) {
         return requestSender.updateUserProduct("Bearer " + token, userProduct);
     }
+
+    @Override
+    public Call<Void> delete(@NonNull String token, @NonNull Long id) {
+        return requestSender.deleteUserProduct("Bearer " + token, id);
+    }
 }

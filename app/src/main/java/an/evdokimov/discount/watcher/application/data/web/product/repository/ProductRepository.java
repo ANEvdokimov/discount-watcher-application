@@ -28,4 +28,6 @@ public interface ProductRepository {
     Call<Void> addProduct(@NonNull String token, @NonNull NewProduct product);
 
     Call<Void> update(@NonNull String token, @NonNull UserProductRequest userProduct);
+
+    Call<Void> delete(@NonNull String token, @NonNull Long id);
 }

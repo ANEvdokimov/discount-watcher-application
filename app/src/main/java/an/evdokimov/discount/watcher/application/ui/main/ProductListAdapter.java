@@ -74,6 +74,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         notifyItemChanged(position);
     }
 
+    public void deleteProduct(int position) {
+        products.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

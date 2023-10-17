@@ -68,6 +68,11 @@ public class UserProductServiceImpl extends BaseService<UserProductResponse>
         return Completable.fromAction(() -> updateSync(userProduct));
     }
 
+    @Override
+    public Completable delete(@NonNull Long userProductId) {
+        return Completable.fromAction(() -> deleteSync(userProductId));
+    }
+
     public UserProduct getUserProductByIdSync(@NonNull Long id)
             throws ServerException, IOException {
         Response<UserProductResponse> response = execute(token ->
@@ -116,6 +121,14 @@ public class UserProductServiceImpl extends BaseService<UserProductResponse>
         UserProductRequest request = userProductMapper.mapToRequest(userProduct);
 
         Response<Void> response = executeForVoid(token -> repository.update(token, request));
+
+        if (!response.isSuccessful()) {
+            throw new ServerException(response.errorBody().string());//TODO parse error message
+        }
+    }
+
+    private void deleteSync(@NonNull Long userProductId) throws ServerException, IOException {
+        Response<Void> response = executeForVoid(token -> repository.delete(token, userProductId));
 
         if (!response.isSuccessful()) {
             throw new ServerException(response.errorBody().string());//TODO parse error message

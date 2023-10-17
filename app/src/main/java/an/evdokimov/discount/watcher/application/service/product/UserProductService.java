@@ -23,4 +23,6 @@ public interface UserProductService {
     Completable addProduct(@NonNull NewProduct product);
 
     Completable update(@NonNull UserProduct userProduct);
+
+    Completable delete(@NonNull Long userProductId);
 }
