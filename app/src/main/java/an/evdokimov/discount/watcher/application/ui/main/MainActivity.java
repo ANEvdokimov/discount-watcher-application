@@ -62,17 +62,11 @@ public class MainActivity extends AppCompatActivity {
         ((DiscountWatcherApplication) getApplicationContext())
                 .applicationComponent.inject(this);
 
-        configureAddProductButton();
-        configureOnlyActiveCheckbox();
-        configureModeSpinner();
-        configureShopSpinner();
-        configureProductList();
-
         userService.getActive()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        this::updateContent,
+                        user -> updateContent(),
                         ExceptionService::throwException,
                         this::openLoginActivityAndShowContent
                 );
@@ -93,11 +87,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    protected void updateContent(User activeUser) {
-        updateContent();
-    }
-
     protected void updateContent() {
+        configureAddProductButton();
+        configureOnlyActiveCheckbox();
+        configureModeSpinner();
+        configureShopSpinner();
+        configureProductList();
+
         shopSpinnerAdapter.updateShopSpinner();
     }
 

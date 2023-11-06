@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.Function;
 
+import an.evdokimov.discount.watcher.application.data.database.UserNotFoundException;
+import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
 import an.evdokimov.discount.watcher.application.service.user.UserService;
 import retrofit2.Call;
@@ -18,7 +20,7 @@ public abstract class BaseService<T> {
 
     protected Response<T> execute(Function<String, Call<T>> request)
             throws IOException, ServerException {
-        Response<T> response = request.apply(userService.getActive().blockingGet().token).execute();
+        Response<T> response = request.apply(getActiveUser().token).execute();
 
         if (response.isSuccessful()) {
             return response;
@@ -35,7 +37,7 @@ public abstract class BaseService<T> {
     protected Response<List<T>> executeForMultiply(
             Function<String, Call<List<T>>> request) throws IOException, ServerException {
         Response<List<T>> response =
-                request.apply(userService.getActive().blockingGet().token).execute();
+                request.apply(getActiveUser().token).execute();
 
         if (response.isSuccessful()) {
             return response;
@@ -51,7 +53,7 @@ public abstract class BaseService<T> {
 
     protected Response<Void> executeForVoid(Function<String, Call<Void>> request)
             throws IOException, ServerException {
-        Response<Void> response = request.apply(userService.getActive().blockingGet().token).execute();
+        Response<Void> response = request.apply(getActiveUser().token).execute();
 
         if (response.isSuccessful()) {
             return response;
@@ -62,6 +64,15 @@ public abstract class BaseService<T> {
             return request.apply(newToken).execute();
         } else {
             throw new ServerException(response.errorBody().string());//TODO parse error message
+        }
+    }
+
+    private User getActiveUser() {
+        User activeUser = userService.getActive().blockingGet();
+        if (activeUser == null) {
+            throw new UserNotFoundException();
+        } else {
+            return activeUser;
         }
     }
 }
