@@ -24,12 +24,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Call<ProductResponse> getById(@NonNull String token, @NonNull Long id) {
-        return requestSender.getById("Bearer " + token, id);
+        return requestSender.getById(token, id);
     }
 
     @Override
     public Call<UserProductResponse> getUserProductById(@NonNull String token, @NonNull Long id) {
-        return requestSender.getUserProductById("Bearer " + token, id);
+        return requestSender.getUserProductById(token, id);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                                                   @Nullable Boolean monitorDiscount,
                                                   @Nullable Boolean monitorPriceChanges) {
         return requestSender.get(
-                "Bearer " + token,
+                token,
                 onlyActive,
                 shop != null ? shop.getId() : null,
                 monitorAvailability,
@@ -51,16 +51,16 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Call<Void> addProduct(@NonNull String token, @NonNull NewProduct product) {
-        return requestSender.addProduct("Bearer " + token, product);
+        return requestSender.addProduct(token, product);
     }
 
     @Override
     public Call<Void> update(@NonNull String token, @NonNull UserProductRequest userProduct) {
-        return requestSender.updateUserProduct("Bearer " + token, userProduct);
+        return requestSender.updateUserProduct(token, userProduct);
     }
 
     @Override
     public Call<Void> delete(@NonNull String token, @NonNull Long id) {
-        return requestSender.deleteUserProduct("Bearer " + token, id);
+        return requestSender.deleteUserProduct(token, id);
     }
 }

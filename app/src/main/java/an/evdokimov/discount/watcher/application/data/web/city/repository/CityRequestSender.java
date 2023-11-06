@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 
 public interface CityRequestSender {
-    @GET("/api/cities")
+    @GET("server/api/cities")
     Call<List<CityResponse>> getAll(@Header("Authorization") String token);
 }

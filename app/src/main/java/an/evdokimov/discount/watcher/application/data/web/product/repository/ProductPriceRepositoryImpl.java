@@ -23,6 +23,6 @@ public class ProductPriceRepositoryImpl implements ProductPriceRepository {
                                                            Long productId,
                                                            @Nullable Boolean group,
                                                            @Nullable LocalDate startDate) {
-        return requestSender.getByProductId("Bearer " + token, productId, group, startDate);
+        return requestSender.getByProductId(token, productId, group, startDate);
     }
 }

@@ -20,15 +20,15 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ProductRequestSender {
-    @GET("api/product/{id}")
+    @GET("server/api/product/{id}")
     Call<ProductResponse> getById(@Header("Authorization") @NonNull String token,
                                   @Path("id") @NonNull Long id);
 
-    @GET("api/products/by_user/{id}")
+    @GET("server/api/products/by_user/{id}")
     Call<UserProductResponse> getUserProductById(@Header("Authorization") @NonNull String token,
                                                  @Path("id") @NonNull Long id);
 
-    @GET("api/products/by_user")
+    @GET("server/api/products/by_user")
     Call<List<UserProductResponse>> get(@Header("Authorization") String token,
                                         @Header("only-active") Boolean onlyActive,
                                         @Header("shop-id") @Nullable Long shop,
@@ -36,15 +36,15 @@ public interface ProductRequestSender {
                                         @Header("monitor-discount") @Nullable Boolean monitorDiscount,
                                         @Header("monitor-price-changes") @Nullable Boolean monitorPriceChanges);
 
-    @PUT("api/products/add_by_cookies")
+    @PUT("server/api/products/add_by_cookies")
     Call<Void> addProduct(@Header("Authorization") String token,
                           @Body NewProduct product);
 
-    @POST("api/products/by_user")
+    @POST("server/api/products/by_user")
     Call<Void> updateUserProduct(@Header("Authorization") @NonNull String token,
                                  @Body @NonNull UserProductRequest userProduct);
 
-    @DELETE("api/products/by_user/{id}")
+    @DELETE("server/api/products/by_user/{id}")
     Call<Void> deleteUserProduct(@Header("Authorization") @NonNull String token,
                                  @Path("id") @NonNull Long id);
 }

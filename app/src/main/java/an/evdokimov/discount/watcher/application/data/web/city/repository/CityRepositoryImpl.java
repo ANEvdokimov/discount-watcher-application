@@ -19,6 +19,6 @@ public class CityRepositoryImpl implements CityRepository {
 
     @Override
     public Call<List<CityResponse>> getAll(String token) {
-        return requestSender.getAll("Bearer " + token);
+        return requestSender.getAll(token);
     }
 }

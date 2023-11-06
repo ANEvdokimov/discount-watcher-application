@@ -20,6 +20,6 @@ public class ShopRepositoryImpl implements ShopRepository {
 
     @Override
     public Call<List<ShopResponse>> getByUser(@NonNull String token, @Nullable Boolean onlyMy) {
-        return requestSender.getByUser("Bearer " + token, onlyMy);
+        return requestSender.getByUser(token, onlyMy);
     }
 }

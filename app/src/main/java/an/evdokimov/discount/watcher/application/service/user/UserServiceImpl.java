@@ -7,9 +7,7 @@ import javax.inject.Inject;
 import an.evdokimov.discount.watcher.application.data.database.user.dao.UserDao;
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
-import an.evdokimov.discount.watcher.application.data.web.user.dto.request.LoginRequest;
 import an.evdokimov.discount.watcher.application.data.web.user.dto.request.RegisterRequest;
-import an.evdokimov.discount.watcher.application.data.web.user.dto.response.LoginResponse;
 import an.evdokimov.discount.watcher.application.data.web.user.repository.UserRepository;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Maybe;
@@ -43,11 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private User loginSync(String login, String password) throws IOException, ServerException {
-        Response<LoginResponse> response =
-                repository.login(new LoginRequest(login, password)).execute();
+        Response<Void> response =
+                repository.login(login, password).execute();
 
         if (response.isSuccessful()) {
-            return saveNewActiveUser(login, password, response.body().getToken());
+            return saveNewActiveUser(login, password, response.headers().get("Authorization"));
         } else {
             throw new ServerException(response.errorBody().string());
         }
@@ -58,11 +56,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private User registerSync(String login, String password) throws IOException, ServerException {
-        Response<LoginResponse> response =
-                repository.register(new RegisterRequest(login, login, password)).execute();
+        Response<Void> response =
+                repository.register(new RegisterRequest(login, password)).execute();
 
         if (response.isSuccessful()) {
-            return saveNewActiveUser(login, password, response.body().getToken());
+            return saveNewActiveUser(login, password, response.headers().get("Authorization"));
         } else {
             throw new ServerException(response.errorBody().string());
         }

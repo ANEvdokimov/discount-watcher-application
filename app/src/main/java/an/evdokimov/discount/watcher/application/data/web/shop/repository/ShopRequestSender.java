@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 
 public interface ShopRequestSender {
-    @GET("/api/shops")
+    @GET("server/api/shops")
     Call<List<ShopResponse>> getByUser(@NonNull @Header("Authorization") String token,
                                        @Nullable @Header("only-my") Boolean onlyMy);
 }

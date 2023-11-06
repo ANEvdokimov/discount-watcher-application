@@ -1,16 +1,16 @@
 package an.evdokimov.discount.watcher.application.data.web.user.repository;
 
-import an.evdokimov.discount.watcher.application.data.web.user.dto.request.LoginRequest;
 import an.evdokimov.discount.watcher.application.data.web.user.dto.request.RegisterRequest;
-import an.evdokimov.discount.watcher.application.data.web.user.dto.response.LoginResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.PUT;
 
 public interface UserRequestSender {
-    @POST("api/users/login")
-    Call<LoginResponse> login(@Body LoginRequest request);
+    @GET("user_service/login")
+    Call<Void> login(@Header("login") String login, @Header("password") String password);
 
-    @POST("api/users/registration")
-    Call<LoginResponse> register(@Body RegisterRequest request);
+    @PUT("user_service/register")
+    Call<Void> register(@Body RegisterRequest request);
 }

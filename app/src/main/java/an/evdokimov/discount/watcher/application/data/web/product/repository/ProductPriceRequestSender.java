@@ -12,7 +12,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Path;
 
 public interface ProductPriceRequestSender {
-    @GET("api/prices/byProduct/{productId}")
+    @GET("server/api/prices/byProduct/{productId}")
     Call<List<ProductPriceResponse>> getByProductId(@Header("Authorization") String token,
                                                     @Path("productId") Long productId,
                                                     @Header("group") @Nullable Boolean group,
