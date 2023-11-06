@@ -1,9 +1,12 @@
 package an.evdokimov.discount.watcher.application.service.user;
 
+import android.app.Application;
+
 import java.io.IOException;
 
 import javax.inject.Inject;
 
+import an.evdokimov.discount.watcher.application.R;
 import an.evdokimov.discount.watcher.application.data.database.user.dao.UserDao;
 import an.evdokimov.discount.watcher.application.data.database.user.model.User;
 import an.evdokimov.discount.watcher.application.data.web.ServerException;
@@ -16,11 +19,13 @@ import retrofit2.Response;
 public class UserServiceImpl implements UserService {
     private final UserDao dao;
     private final UserRepository repository;
+    private final Application application;
 
     @Inject
-    public UserServiceImpl(UserDao userDao, UserRepository userRepository) {
+    public UserServiceImpl(UserDao userDao, UserRepository userRepository, Application application) {
         this.dao = userDao;
         this.repository = userRepository;
+        this.application = application;
     }
 
     public Flowable<User> observeActiveUser() {
@@ -46,6 +51,8 @@ public class UserServiceImpl implements UserService {
 
         if (response.isSuccessful()) {
             return saveNewActiveUser(login, password, response.headers().get("Authorization"));
+        } else if (response.code() == 401) {
+            throw new ServerException(application.getString(R.string.wrong_credentials));
         } else {
             throw new ServerException(response.errorBody().string());
         }

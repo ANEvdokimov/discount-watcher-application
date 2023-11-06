@@ -30,4 +30,5 @@
     <string name="tw_price_history">История цен за 3 месяца:</string>
     <string name="in_stock">В наличии</string>
     <string name="not_in_stock">Отсутствует</string>
+    <string name="wrong_credentials">Неверный логин или пароль</string>
 </resources>

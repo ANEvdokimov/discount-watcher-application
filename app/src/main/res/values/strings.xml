@@ -44,4 +44,8 @@
     <!--    ProductDetailsActivity.PriceHistoryAdapter  -->
     <string name="in_stock">In stock</string>
     <string name="not_in_stock">Absent</string>
+
+
+    <!--    UserService  -->
+    <string name="wrong_credentials">Wrong login or password</string>
 </resources>
